@@ -1,0 +1,112 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page {
+    height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+    background-color: #D4D7E6;
+}
+
+.custom-rounded-styling .mat-mdc-text-field-wrapper,
+input.mat-mdc-input-element {
+    border-radius: 1.3rem;
+    padding: 0rem 1rem 0rem 1rem;
+}
+
+.custom-rounded-styling .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+.item-toy-card.custom-rounded-styling.mat-mdc-card {
+    border-radius: 1.3rem;
+    padding: 0.5rem;
+}
+
+.chip-list mat-chip-listbox>div.mdc-evolution-chip-set__chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.chip-list mat-chip-option button.mdc-evolution-chip__action,
+.mdc-evolution-chip__text-label,
+.mat-mdc-chip-action-label {
+    width: 100%;
+}
+
+.chip-list mat-chip-option .mdc-evolution-chip__graphic {
+    margin-right: 0.3rem;
+}
+
+.button {
+    background-color: #F45296;
+    color: #FFEFC0;
+    border: none;
+    border-radius: 1.4rem;
+    padding: 10px 15px;
+    align-items: center;
+    display: inline-flex;
+    gap: 0.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    background-color: #dd4d93;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+}
+
+.button:active {
+    background-color: #d74e89;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+    transform: translateY(1.5px);
+    transition: transform 0.3s ease, background-color 0.5 ease;
+}
+
+.round-icon-button {
+    display: flex;
+    align-items: center;
+    background-color: #F45296;
+    color: #FFEFC0;
+    border-radius: 100%;
+    padding: 0.8rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.round-icon-button:hover {
+    background-color: #dd4d93;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+}
+
+.round-icon-button:active {
+    background-color: #d74e89;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.2) inset;
+    transform: translateY(1.5px);
+    transition: transform 0.3s ease, background-color 0.5 ease;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

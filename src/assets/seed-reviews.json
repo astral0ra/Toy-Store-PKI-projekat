@@ -1,0 +1,450 @@
+[
+  {
+    "id": 1,
+    "toyId": 8,
+    "userName": "Marija P.",
+    "rating": 5,
+    "comment": "Odličan LEGO set! Dete se igra satima, kvalitet je fantastičan.",
+    "date": "2024-12-15"
+  },
+  {
+    "id": 2,
+    "toyId": 8,
+    "userName": "Nikola S.",
+    "rating": 5,
+    "comment": "Kupili smo za rođendan, sin je oduševljen. Preporučujem!",
+    "date": "2024-12-10"
+  },
+  {
+    "id": 3,
+    "toyId": 8,
+    "userName": "Ana M.",
+    "rating": 5,
+    "comment": "Kvalitetni delovi, lako se sklapaju. Idealno za decu od 5 godina.",
+    "date": "2024-11-28"
+  },
+  {
+    "id": 4,
+    "toyId": 8,
+    "userName": "Petar J.",
+    "rating": 4,
+    "comment": "Dobar set, ali nedostaju neke boje koje su bile na slici.",
+    "date": "2024-11-20"
+  },
+  {
+    "id": 5,
+    "toyId": 8,
+    "userName": "Jelena K.",
+    "rating": 5,
+    "comment": "Treći put kupujemo LEGO ovde, uvek zadovoljni!",
+    "date": "2024-11-15"
+  },
+  {
+    "id": 6,
+    "toyId": 8,
+    "userName": "Milan R.",
+    "rating": 5,
+    "comment": "Poklon za unuka, kaže da je najbolji poklon ikad!",
+    "date": "2024-11-01"
+  },
+  {
+    "id": 7,
+    "toyId": 8,
+    "userName": "Ivana T.",
+    "rating": 4,
+    "comment": "Solidno, deca uživaju. Cena je malo viša ali vredi.",
+    "date": "2024-10-25"
+  },
+  {
+    "id": 8,
+    "toyId": 8,
+    "userName": "Stefan B.",
+    "rating": 5,
+    "comment": "Najbolji konstruktorski set koji smo imali. 400 delova je sasvim dovoljno.",
+    "date": "2024-10-18"
+  },
+  {
+    "id": 9,
+    "toyId": 8,
+    "userName": "Dragana L.",
+    "rating": 5,
+    "comment": "Brza isporuka, original LEGO. Sve preporuke!",
+    "date": "2024-10-10"
+  },
+  {
+    "id": 10,
+    "toyId": 8,
+    "userName": "Miloš N.",
+    "rating": 4,
+    "comment": "Kvalitetno, dete se igra svaki dan. Jedino fali uputstvo za neke modele.",
+    "date": "2024-09-28"
+  },
+  {
+    "id": 11,
+    "toyId": 8,
+    "userName": "Tijana D.",
+    "rating": 5,
+    "comment": "Super za razvoj kreativnosti. Ćerka pravi neverovatne stvari!",
+    "date": "2024-09-15"
+  },
+  {
+    "id": 12,
+    "toyId": 6,
+    "userName": "Milica V.",
+    "rating": 5,
+    "comment": "Preslatka panda! Meka, kvalitetna i sigurna za decu.",
+    "date": "2024-12-12"
+  },
+  {
+    "id": 13,
+    "toyId": 6,
+    "userName": "Jovana P.",
+    "rating": 5,
+    "comment": "Kupila sam za ćerku, ne odvaja se od nje. Odličan kvalitet pamuka.",
+    "date": "2024-12-05"
+  },
+  {
+    "id": 14,
+    "toyId": 6,
+    "userName": "Marko T.",
+    "rating": 5,
+    "comment": "Poklon za devojčicu od 3 godine, oduševljena je!",
+    "date": "2024-11-22"
+  },
+  {
+    "id": 15,
+    "toyId": 6,
+    "userName": "Sandra K.",
+    "rating": 4,
+    "comment": "Lepa igračka, samo je malo manja nego što sam očekivala.",
+    "date": "2024-11-10"
+  },
+  {
+    "id": 16,
+    "toyId": 6,
+    "userName": "Dejan M.",
+    "rating": 5,
+    "comment": "Sin je izabrao pandu za rođendan. Najbolja odluka!",
+    "date": "2024-10-30"
+  },
+  {
+    "id": 17,
+    "toyId": 6,
+    "userName": "Katarina S.",
+    "rating": 5,
+    "comment": "Treća plišana igračka koju kupujemo ovde. Uvek odličan kvalitet.",
+    "date": "2024-10-15"
+  },
+  {
+    "id": 18,
+    "toyId": 6,
+    "userName": "Zoran B.",
+    "rating": 4,
+    "comment": "Fina igračka, unuka je srećna. Preporučujem.",
+    "date": "2024-10-01"
+  },
+  {
+    "id": 19,
+    "toyId": 6,
+    "userName": "Nevena J.",
+    "rating": 5,
+    "comment": "Prelepa panda, izgleda još bolje uživo!",
+    "date": "2024-09-20"
+  },
+  {
+    "id": 20,
+    "toyId": 6,
+    "userName": "Igor R.",
+    "rating": 5,
+    "comment": "Meka i mazna, dete spava sa njom svaku noć.",
+    "date": "2024-09-05"
+  },
+  {
+    "id": 21,
+    "toyId": 6,
+    "userName": "Tamara L.",
+    "rating": 4,
+    "comment": "Dobra igračka za cenu. Šavovi su čvrsti.",
+    "date": "2024-08-25"
+  },
+  {
+    "id": 22,
+    "toyId": 7,
+    "userName": "Vladimir K.",
+    "rating": 5,
+    "comment": "Monopol Junior je savršen za porodična okupljanja!",
+    "date": "2024-12-08"
+  },
+  {
+    "id": 23,
+    "toyId": 7,
+    "userName": "Aleksandra M.",
+    "rating": 5,
+    "comment": "Deca obožavaju, igramo ga svake nedelje. Pravila su jednostavna.",
+    "date": "2024-11-25"
+  },
+  {
+    "id": 24,
+    "toyId": 7,
+    "userName": "Bojan P.",
+    "rating": 4,
+    "comment": "Dobra verzija za mlađe. Partija traje oko 30 minuta.",
+    "date": "2024-11-12"
+  },
+  {
+    "id": 25,
+    "toyId": 7,
+    "userName": "Maja S.",
+    "rating": 5,
+    "comment": "Kupili za sina od 6 godina, brzo je naučio pravila!",
+    "date": "2024-10-28"
+  },
+  {
+    "id": 26,
+    "toyId": 7,
+    "userName": "Dragan T.",
+    "rating": 5,
+    "comment": "Odlična igra za učenje o novcu na zabavan način.",
+    "date": "2024-10-10"
+  },
+  {
+    "id": 27,
+    "toyId": 7,
+    "userName": "Snežana R.",
+    "rating": 4,
+    "comment": "Kvalitetna izrada, samo su kartice malo tanke.",
+    "date": "2024-09-22"
+  },
+  {
+    "id": 28,
+    "toyId": 7,
+    "userName": "Nemanja B.",
+    "rating": 5,
+    "comment": "Cela porodica uživa! Preporučujem za decu od 5+.",
+    "date": "2024-09-08"
+  },
+  {
+    "id": 29,
+    "toyId": 7,
+    "userName": "Ivica L.",
+    "rating": 5,
+    "comment": "Klasika u Junior verziji. Sjajna kupovina!",
+    "date": "2024-08-20"
+  },
+  {
+    "id": 30,
+    "toyId": 7,
+    "userName": "Gordana N.",
+    "rating": 4,
+    "comment": "Zabavno i edukativno. Deca traže da igramo svaki dan.",
+    "date": "2024-08-05"
+  },
+  {
+    "id": 31,
+    "toyId": 7,
+    "userName": "Predrag M.",
+    "rating": 5,
+    "comment": "Najbolja društvena igra za mlađu decu!",
+    "date": "2024-07-25"
+  },
+  {
+    "id": 32,
+    "toyId": 5,
+    "userName": "Miroslav J.",
+    "rating": 4,
+    "comment": "Vatrogasni kamion je odličan, sin se igra svaki dan.",
+    "date": "2024-12-01"
+  },
+  {
+    "id": 33,
+    "toyId": 5,
+    "userName": "Vera S.",
+    "rating": 4,
+    "comment": "Dobar kvalitet metala, merdevine rade kako treba.",
+    "date": "2024-11-15"
+  },
+  {
+    "id": 34,
+    "toyId": 5,
+    "userName": "Lazar K.",
+    "rating": 3,
+    "comment": "Solidan kamion, ali točkovi su malo labavi.",
+    "date": "2024-10-20"
+  },
+  {
+    "id": 35,
+    "toyId": 5,
+    "userName": "Danijela P.",
+    "rating": 4,
+    "comment": "Dete je oduševljeno, jedino boja malo bledi.",
+    "date": "2024-09-30"
+  },
+  {
+    "id": 36,
+    "toyId": 5,
+    "userName": "Uroš M.",
+    "rating": 4,
+    "comment": "Realistični detalji, sin kaže da je pravi vatrogasac sada!",
+    "date": "2024-09-10"
+  },
+  {
+    "id": 37,
+    "toyId": 5,
+    "userName": "Biljana T.",
+    "rating": 3,
+    "comment": "OK za cenu, očekivala sam malo bolji kvalitet.",
+    "date": "2024-08-15"
+  },
+  {
+    "id": 38,
+    "toyId": 9,
+    "userName": "Goran V.",
+    "rating": 4,
+    "comment": "Bubanj je super za razvoj ritma kod dece.",
+    "date": "2024-11-28"
+  },
+  {
+    "id": 39,
+    "toyId": 9,
+    "userName": "Olivera K.",
+    "rating": 3,
+    "comment": "Dobar za početnike, zvuk mogao biti bolji.",
+    "date": "2024-11-05"
+  },
+  {
+    "id": 40,
+    "toyId": 9,
+    "userName": "Dušan R.",
+    "rating": 4,
+    "comment": "Svetlosni efekti su hit! Dete obožava.",
+    "date": "2024-10-12"
+  },
+  {
+    "id": 41,
+    "toyId": 9,
+    "userName": "Slađana B.",
+    "rating": 4,
+    "comment": "Melodije su raznovrsne, drži pažnju deteta.",
+    "date": "2024-09-18"
+  },
+  {
+    "id": 42,
+    "toyId": 9,
+    "userName": "Aleksandar L.",
+    "rating": 3,
+    "comment": "Solidna igračka, baterije se brzo troše.",
+    "date": "2024-08-25"
+  },
+  {
+    "id": 43,
+    "toyId": 19,
+    "userName": "Nataša M.",
+    "rating": 4,
+    "comment": "Klavir je super za malu decu, lepe melodije.",
+    "date": "2024-12-03"
+  },
+  {
+    "id": 44,
+    "toyId": 19,
+    "userName": "Branko S.",
+    "rating": 4,
+    "comment": "Ćerka voli da svira, dobar uvod u muziku.",
+    "date": "2024-11-10"
+  },
+  {
+    "id": 45,
+    "toyId": 19,
+    "userName": "Zorica P.",
+    "rating": 3,
+    "comment": "Zvuk je OK, plastika je malo jeftina.",
+    "date": "2024-10-05"
+  },
+  {
+    "id": 46,
+    "toyId": 19,
+    "userName": "Filip K.",
+    "rating": 4,
+    "comment": "20 dirki je dovoljno za učenje osnova.",
+    "date": "2024-09-12"
+  },
+  {
+    "id": 47,
+    "toyId": 19,
+    "userName": "Ljiljana T.",
+    "rating": 4,
+    "comment": "Unuka uživa, sada želi pravi klavir!",
+    "date": "2024-08-20"
+  },
+  {
+    "id": 48,
+    "toyId": 1,
+    "userName": "Radovan M.",
+    "rating": 4,
+    "comment": "Edukativna slagalica, dete uči životinje.",
+    "date": "2024-11-22"
+  },
+  {
+    "id": 49,
+    "toyId": 1,
+    "userName": "Mirjana K.",
+    "rating": 5,
+    "comment": "Drvo je kvalitetno, boje su lepe i sigurne.",
+    "date": "2024-10-15"
+  },
+  {
+    "id": 50,
+    "toyId": 1,
+    "userName": "Saša J.",
+    "rating": 4,
+    "comment": "Dobra za razvoj motorike kod najmlađih.",
+    "date": "2024-09-08"
+  },
+  {
+    "id": 51,
+    "toyId": 3,
+    "userName": "Vesna R.",
+    "rating": 4,
+    "comment": "Figura superheroja je detaljna i čvrsta.",
+    "date": "2024-11-18"
+  },
+  {
+    "id": 52,
+    "toyId": 3,
+    "userName": "Darko B.",
+    "rating": 5,
+    "comment": "Sin obožava, ima ih već 5 iz kolekcije!",
+    "date": "2024-10-25"
+  },
+  {
+    "id": 53,
+    "toyId": 10,
+    "userName": "Emilija S.",
+    "rating": 5,
+    "comment": "Pametni globus je fantastičan za učenje geografije!",
+    "date": "2024-12-10"
+  },
+  {
+    "id": 54,
+    "toyId": 10,
+    "userName": "Jovan M.",
+    "rating": 4,
+    "comment": "Informacije su tačne i zanimljive, deca uče kroz igru.",
+    "date": "2024-11-05"
+  },
+  {
+    "id": 55,
+    "toyId": 17,
+    "userName": "Marina L.",
+    "rating": 2,
+    "comment": "Čoveče ne ljuti se ima oštećenu kutiju, razočarana sam.",
+    "date": "2024-10-30"
+  },
+  {
+    "id": 56,
+    "toyId": 17,
+    "userName": "Nenad K.",
+    "rating": 3,
+    "comment": "Klasična igra, ali figurice su malo male.",
+    "date": "2024-09-15"
+  }
+]

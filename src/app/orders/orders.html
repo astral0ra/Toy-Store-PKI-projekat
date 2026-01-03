@@ -1,0 +1,84 @@
+<div class="orders-page">
+  <h1>Moje porudžbine</h1>
+
+  @if (orders.length === 0) {
+    <div class="empty-orders">
+      <mat-icon>receipt_long</mat-icon>
+      <p>Nemate porudžbine</p>
+      <button mat-raised-button color="primary" (click)="goToShop()">
+        <mat-icon>store</mat-icon>
+        Pregledaj igračke
+      </button>
+    </div>
+  } @else {
+    <div class="orders-list">
+      @for (order of orders; track order.id) {
+        <mat-card class="order-card">
+          <mat-card-header>
+            <mat-card-title>Porudžbina #{{ order.id }}</mat-card-title>
+            <mat-card-subtitle>{{ formatDate(order.createdAt) }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="order-items">
+              @for (item of order.items; track item.id) {
+                <div class="order-item" [class.cancelled]="item.status === 'otkazano'">
+                  <img [src]="item.toy.imageUrl" [alt]="item.toy.name" class="item-image">
+
+                  <div class="item-details">
+                    <h4>{{ item.toy.name }}</h4>
+                    <p class="item-meta">
+                      Količina: {{ item.quantity }} &bull; {{ item.toy.price * item.quantity }} RSD
+                    </p>
+                  </div>
+
+                  <div class="item-status">
+                    <mat-chip [color]="getStatusColor(item.status)" selected>
+                      <mat-icon>{{ getStatusIcon(item.status) }}</mat-icon>
+                      {{ getStatusLabel(item.status) }}
+                    </mat-chip>
+                  </div>
+
+                  <div class="item-actions">
+                    @switch (item.status) {
+                      @case ('rezervisano') {
+                        <button mat-stroked-button color="warn" (click)="cancelItem(order.id, item.id)">
+                          <mat-icon>cancel</mat-icon>
+                          Otkaži
+                        </button>
+                        <!-- Admin simulation button -->
+                        <button mat-stroked-button color="primary" (click)="markAsArrived(order.id, item.id)">
+                          <mat-icon>local_shipping</mat-icon>
+                          Stiglo
+                        </button>
+                      }
+                      @case ('pristiglo') {
+                        <button mat-raised-button color="primary" (click)="goToReview(item.toy.toyId)">
+                          <mat-icon>rate_review</mat-icon>
+                          Oceni
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteItem(order.id, item.id)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      }
+                      @case ('otkazano') {
+                        <span class="cancelled-label">Otkazano</span>
+                      }
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="order-total">
+              <span>Ukupno:</span>
+              <span class="total-price">{{ order.totalPrice }} RSD</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

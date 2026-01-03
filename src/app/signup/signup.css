@@ -1,0 +1,80 @@
+/* full stage, centered */
+.auth-wrap {
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: linear-gradient(to bottom right, #f7f3f7 0%, #e6e8f0 45%, #dee3f2 100%);
+  overflow: hidden; /* avoid tiny scrollbars */
+}
+
+/* wrapper, no vertical shift anymore */
+.auth-card { position: relative; }
+
+/* hide logo if you kept it in HTML */
+.auth-logo { display: none; }
+
+/* form card, about 20 percent wider, compact padding */
+.auth-form {
+  width: clamp(380px, 48vw, 520px); /* wider than before */
+  display: grid;
+  gap: 10px;
+  padding: 20px 24px;   /* reduced vertical padding */
+  border-radius: 18px;
+  background: #faf7fb;
+  box-shadow: 0 10px 22px rgba(64,72,112,0.15), 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.auth-form h1 {
+  margin: 0 0 2px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #404870;
+}
+
+mat-form-field { width: 100%; }
+
+/* two column rows where used */
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 640px) {
+  .row { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+
+/* compact button */
+.auth-form button[mat-raised-button] {
+  border-radius: 26px;
+  font-weight: 600;
+  padding: 10px 16px;
+}
+
+/* tiny hint only while focused */
+.pw-hint,
+.auth-form .mat-mdc-form-field-hint {
+  font-size: 11px;
+  line-height: 1.1;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+mat-form-field:not(:focus-within) .pw-hint,
+.auth-form mat-form-field:not(:focus-within) .mat-mdc-form-field-hint {
+  display: none;
+}
+
+/* trim subscript wrapper height */
+.auth-form .mat-mdc-form-field-subscript-wrapper {
+  padding: 0 8px;
+  min-height: 0;
+}
+
+/* extra squeeze on short laptop screens */
+@media (max-height: 750px) {
+  .auth-form { gap: 8px; padding: 16px 18px; }
+  .auth-form h1 { font-size: 1.5rem; }
+  .row { gap: 6px; }
+}

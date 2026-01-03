@@ -1,0 +1,103 @@
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+      <h1>Kreiraj nalog</h1>
+
+      <!-- Ime + Prezime side by side -->
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Ime</mat-label>
+          <input matInput formControlName="name" />
+          @if (f.name.touched && f.name.hasError('required')) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prezime</mat-label>
+          <input matInput formControlName="surname" />
+          @if (f.surname.touched && f.surname.hasError('required')) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        @if (f.email.touched && f.email.hasError('required')) {<mat-error>Obavezno polje!</mat-error>}
+        @if (f.email.touched && f.email.hasError('email')) {<mat-error>Vaša email adresa nije tačna!</mat-error>}
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phone" />
+      </mat-form-field>
+
+      <div formGroupName="passwordGroup" class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Lozinka</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-hint class="pw-hint">8+ karaktera, koristite slova i brojeve.</mat-hint>
+          @if (pwg.password.touched && pwg.password.hasError('required'))
+          {<mat-error>Obavezno polje!</mat-error>}
+          @if (pwg.password.touched && pwg.password.hasError('minlength'))
+          {<mat-error>Vaša lozinka je suviše kratka!</mat-error>}
+          @if (pwg.password.touched && pwg.password.hasError('pattern'))
+          {<mat-error>Koristite slova i brojeve.</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Potvrdite lozinku</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" />
+          @if (pwg.confirmPassword.touched && pwg.confirmPassword.hasError('required'))
+          {<mat-error>Obavezno polje!</mat-error>}
+          @if (form.get('passwordGroup')?.touched && form.get('passwordGroup')?.hasError('passwordMismatch'))
+          {<mat-error>Šifre se ne podudaraju!</mat-error>}
+        </mat-form-field>
+      </div>
+
+      <div formGroupName="address" class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Grad</mat-label>
+          <mat-select formControlName="city">
+            @for (c of countries; track c.code)
+            {<mat-option [value]="c.code">{{ c.name }}</mat-option>}
+          </mat-select>
+          @if (addr.city.touched && addr.city.hasError('required')) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Ulica</mat-label>
+          <input matInput formControlName="street" />
+          @if (addr.street.touched && addr.street.hasError('required')) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Broj</mat-label>
+          <input matInput formControlName="number" />
+          @if (addr.number.touched && addr.number.hasError('required'))
+          {<mat-error>Obavezno polje!</mat-error>}
+          @if (addr.number.touched && addr.number.hasError('pattern'))
+          {<mat-error>Broj mora biti u formatu 12 ili 12a.</mat-error>}
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Omiljene vrste igračaka</mat-label>
+        @if (loadingTypes()) {
+          <mat-select disabled>
+            <mat-option>Učitavanje...</mat-option>
+          </mat-select>
+        } @else {
+          <mat-select formControlName="favouriteTypes" multiple>
+            @for (type of types(); track type.typeId) {
+              <mat-option [value]="type.typeId">{{ type.name }}</mat-option>
+            }
+          </mat-select>
+        }
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="submitting() || form.invalid">
+        {{ submitting() ? 'Submitting...' : 'Create account' }}
+      </button>
+    </form>
+  </div>
+</div>

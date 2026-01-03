@@ -1,0 +1,180 @@
+<div class="toy-page">
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Učitavanje...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-container">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+      <button mat-raised-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Nazad na prodavnicu
+      </button>
+    </div>
+  } @else if (toy()) {
+    <div class="toy-detail">
+      <button mat-button class="back-button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Nazad
+      </button>
+
+      <div class="toy-content">
+        <div class="toy-image-section">
+          <img [src]="toy()!.imageUrl" [alt]="toy()!.name" class="toy-image">
+        </div>
+
+        <div class="toy-info-section">
+          <h1 class="toy-title">{{ toy()!.name }}</h1>
+
+          <div class="toy-rating">
+            <div class="stars-display">
+              @for (star of stars; track star) {
+                <mat-icon [class]="getReviewStarClass(star, averageRating())">star</mat-icon>
+              }
+            </div>
+            <span class="rating-text">{{ averageRating() }} ({{ reviews().length }} recenzija)</span>
+          </div>
+
+          <p class="toy-description">{{ toy()!.description }}</p>
+
+          <div class="toy-meta">
+            <div class="meta-item">
+              <mat-icon>category</mat-icon>
+              <span>{{ toy()!.type?.name || 'Nepoznato' }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon>child_care</mat-icon>
+              <span>Uzrast: {{ toy()!.ageGroup?.name || 'Svi uzrasti' }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon>person</mat-icon>
+              <span>Za: {{ toy()!.targetGroup || 'Sve' }}</span>
+            </div>
+          </div>
+
+          <div class="toy-price">
+            <span class="price-value">{{ toy()!.price }} RSD</span>
+          </div>
+
+          <button mat-raised-button color="primary" class="add-to-cart-btn" (click)="addToCart()">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Dodaj u korpu
+          </button>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Reviews Section -->
+      <div class="reviews-section">
+        <h2>Recenzije ({{ reviewCount() }})</h2>
+
+        <!-- Add Review Form -->
+        <div class="add-review">
+          @if (!authService.currentUser()) {
+            <!-- Not logged in -->
+            <div class="review-notice">
+              <mat-icon>login</mat-icon>
+              <span>Morate biti prijavljeni da biste ostavili recenziju.</span>
+              <a mat-stroked-button routerLink="/login">Prijavi se</a>
+            </div>
+          } @else if (hasUserReviewed()) {
+            <!-- Already reviewed -->
+            <div class="already-reviewed">
+              <mat-icon>check_circle</mat-icon>
+              <span>Već ste ostavili recenziju za ovu igračku.</span>
+            </div>
+          } @else if (toyOrderStatus() === 'not-ordered') {
+            <!-- Never ordered -->
+            <div class="review-notice">
+              <mat-icon>shopping_cart</mat-icon>
+              <span>Morate naručiti ovu igračku da biste ostavili recenziju.</span>
+            </div>
+          } @else if (toyOrderStatus() === 'rezervisano') {
+            <!-- Ordered but not arrived -->
+            <div class="review-notice waiting">
+              <mat-icon>local_shipping</mat-icon>
+              <span>Sačekajte da vam igračka stigne pre ostavljanja recenzije.</span>
+            </div>
+          } @else if (toyOrderStatus() === 'otkazano') {
+            <!-- Cancelled -->
+            <div class="review-notice">
+              <mat-icon>cancel</mat-icon>
+              <span>Vaša porudžbina je otkazana. Naručite ponovo da biste mogli ostaviti recenziju.</span>
+            </div>
+          } @else if (toyOrderStatus() === 'pristiglo') {
+            <!-- Can review! -->
+            <h3>Ostavite recenziju</h3>
+
+            <div class="star-rating-input">
+              <span class="rating-label">Vaša ocena:</span>
+              <div class="stars-interactive">
+                @for (star of stars; track star) {
+                  <mat-icon
+                    [class]="'star-icon ' + getStarClass(star)"
+                    (click)="setRating(star)"
+                    (mouseenter)="setHoverRating(star)"
+                    (mouseleave)="clearHoverRating()">
+                    star
+                  </mat-icon>
+                }
+              </div>
+            </div>
+
+            <div class="comment-input">
+              <textarea
+                [(ngModel)]="userComment"
+                placeholder="Napišite vaš komentar (opciono)..."
+                rows="3">
+              </textarea>
+            </div>
+
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="submitReview()"
+              [disabled]="submittingReview()">
+              @if (submittingReview()) {
+                <mat-spinner diameter="20"></mat-spinner>
+              } @else {
+                <mat-icon>send</mat-icon>
+                Pošalji recenziju
+              }
+            </button>
+          }
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+          @for (review of reviews(); track review.id) {
+            <div class="review-card">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <mat-icon class="avatar-icon">account_circle</mat-icon>
+                  <span class="reviewer-name">{{ review.userName }}</span>
+                </div>
+                <span class="review-date">{{ review.date }}</span>
+              </div>
+
+              <div class="review-stars">
+                @for (star of stars; track star) {
+                  <mat-icon [class]="'star-small ' + getReviewStarClass(star, review.rating)">star</mat-icon>
+                }
+              </div>
+
+              @if (review.comment) {
+                <p class="review-comment">{{ review.comment }}</p>
+              }
+            </div>
+          } @empty {
+            <p class="no-reviews">Još nema recenzija. Budite prvi!</p>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

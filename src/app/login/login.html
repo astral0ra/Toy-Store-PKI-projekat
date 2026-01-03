@@ -1,0 +1,28 @@
+<div class="auth-wrap">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+    <h1>Log in</h1>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      @if (f.email.touched && f.email.hasError('required')) {<mat-error>Required</mat-error>}
+      @if (f.email.touched && f.email.hasError('email')) {<mat-error>Invalid email</mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePw() ? 'password' : 'text'" formControlName="password" />
+      <button mat-icon-button matSuffix type="button" (click)="hidePw.set(!hidePw())" aria-label="Toggle password visibility">
+        <mat-icon>{{ hidePw() ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      @if (f.password.touched && f.password.hasError('required')) {<mat-error>Required</mat-error>}
+      @if (f.password.touched && f.password.hasError('minlength')) {<mat-error>Min 8 characters</mat-error>}
+    </mat-form-field>
+
+    <mat-checkbox formControlName="remember">Remember me</mat-checkbox>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="submitting() || form.invalid">
+      {{ submitting() ? 'Signing in...' : 'Sign in' }}
+    </button>
+  </form>
+</div>

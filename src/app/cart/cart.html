@@ -1,0 +1,76 @@
+<div class="cart-page">
+  <h1>Korpa</h1>
+
+  @if (cartItems.length === 0) {
+    <div class="empty-cart">
+      <mat-icon>shopping_cart</mat-icon>
+      <p>Vaša korpa je prazna</p>
+      <button mat-raised-button color="primary" (click)="goToShop()">
+        <mat-icon>store</mat-icon>
+        Pregledaj igračke
+      </button>
+    </div>
+  } @else {
+    <div class="cart-content">
+      <div class="cart-items">
+        @for (item of cartItems; track item.toy.toyId; let i = $index) {
+          <div class="cart-item">
+            <img [src]="item.toy.imageUrl" [alt]="item.toy.name" class="item-image">
+
+            <div class="item-details">
+              <h3>{{ item.toy.name }}</h3>
+              <p class="item-description">{{ item.toy.description }}</p>
+              <p class="item-price">{{ item.toy.price }} RSD</p>
+            </div>
+
+            <div class="item-quantity">
+              <button mat-icon-button (click)="decreaseQuantity(i)" [disabled]="item.quantity <= 1">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button mat-icon-button (click)="increaseQuantity(i)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div class="item-subtotal">
+              <span>{{ item.toy.price * item.quantity }} RSD</span>
+            </div>
+
+            <button mat-icon-button color="warn" (click)="removeItem(i)" class="remove-btn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Broj artikala:</span>
+          <span>{{ itemCount() }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Ukupno:</span>
+          <span class="total-price">{{ totalPrice() }} RSD</span>
+        </div>
+
+        <div class="cart-actions">
+          <button mat-stroked-button color="warn" (click)="clearCart()">
+            <mat-icon>remove_shopping_cart</mat-icon>
+            Isprazni korpu
+          </button>
+          <button mat-raised-button color="primary" (click)="checkout()" [disabled]="checkingOut()">
+            @if (checkingOut()) {
+              Naručivanje...
+            } @else {
+              <mat-icon>shopping_bag</mat-icon>
+              Naruči
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

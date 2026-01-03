@@ -1,0 +1,195 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 19px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 4.5px solid transparent;
+    background-clip: content-box;
+    background-color: #ADAAC6;
+}
+
+#filter-container {
+    position: sticky;
+    gap: 1.5rem;
+    margin: 2rem 2rem 2rem 2.7rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+    max-width: 230px;
+    flex-grow: 1;
+}
+
+#price-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#search-and-sort {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#item-container {
+    flex: 1;
+    padding: 2rem;
+}
+
+#item-result {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1.2rem;
+    flex-shrink: 1;
+}
+
+.item-toy-card {
+    height: 400px;
+    flex: 0 1 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-toy-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.toggle-button {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-button span.rotated {
+    transform: rotate(180deg);
+}
+
+.filter-label {
+    font-family: Roboto;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #697ca8;
+}
+
+.price-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+}
+
+#min-price-filter,
+#max-price-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-label {
+    width: 30px;
+    font-weight: 500;
+}
+
+.price-input {
+    width: 7rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 1.5rem;
+}
+
+.outer-filter-style {
+    padding: 1.1rem 1.4rem 1.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #01236323;
+    border-radius: 1.5rem;
+    box-shadow: #0013411e 0px 4px 6px;
+}
+
+.chip-list {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-toy-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-toy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.stars-preview {
+    display: flex;
+    gap: 2px;
+    margin: 0.5rem 0;
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0.3rem 0;
+}
+
+.star-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: #FFB800;
+}
+
+.rating-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-left: 4px;
+}
+
+.no-reviews {
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+}
+
+.age-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0.3rem 0;
+    color: #1565c0;
+    font-size: 0.85rem;
+}
+
+.age-group .age-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}

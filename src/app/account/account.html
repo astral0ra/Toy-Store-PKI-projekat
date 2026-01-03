@@ -1,0 +1,83 @@
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h1>Moj nalog</h1>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="auth-form">
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Ime</mat-label>
+          <input matInput formControlName="name" />
+          @if (f.name.touched && f.name.invalid) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prezime</mat-label>
+          <input matInput formControlName="surname" />
+          @if (f.surname.touched && f.surname.invalid) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        @if (f.email.touched && f.email.invalid) {<mat-error >Neispravan email!</mat-error>}
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Grad</mat-label>
+          <input matInput formControlName="city" />
+          @if (f.city.touched && f.city.invalid) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adresa</mat-label>
+          <input matInput formControlName="address" />
+          @if (f.address.touched && f.address.invalid) {<mat-error>Obavezno polje!</mat-error>}
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phone" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Omiljene vrste igračaka</mat-label>
+        @if (loadingTypes()) {
+          <mat-select disabled>
+            <mat-option>Učitavanje...</mat-option>
+          </mat-select>
+        } @else {
+          <mat-select formControlName="favouriteTypes" multiple>
+            @for (type of types(); track type.typeId) {
+              <mat-option [value]="type.typeId">{{ type.name }}</mat-option>
+            }
+          </mat-select>
+        }
+      </mat-form-field>
+
+      <div class="messages">
+        @if (okMsg()) {<p class="ok">{{ okMsg() }}</p>}
+        @if (errorMsg()) {<p class="error">{{ errorMsg() }}</p>}
+      </div>
+
+      <div class="buttons">
+        <button mat-raised-button color="primary" type="submit" [disabled]="saving() || form.invalid">
+          {{ saving() ? 'Čuvanje...' : 'Sačuvaj izmene' }}
+        </button>
+
+        <button mat-stroked-button color="warn" type="button" (click)="logout()">
+          Odjava
+        </button>
+        <div class="password-section">
+          <button mat-stroked-button color="primary" (click)="goToChangePassword()">
+            Promeni lozinku
+          </button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

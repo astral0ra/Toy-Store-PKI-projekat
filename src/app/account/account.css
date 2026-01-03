@@ -1,0 +1,77 @@
+.auth-wrap {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom right, #f7f3f7 0%, #e6e8f0 45%, #dee3f2 100%);
+  padding: 20px;
+}
+
+.auth-card {
+  width: 520px;
+  background: #faf7fb;
+  padding: 40px 32px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(64, 72, 112, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1 {
+  text-align: center;
+  color: #404870;
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+button[mat-raised-button] {
+  border-radius: 24px;
+  font-weight: 600;
+}
+
+button[mat-stroked-button] {
+  border-radius: 24px;
+  font-weight: 600;
+}
+
+.messages {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.ok {
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.error {
+  color: #d32f2f;
+  font-weight: 600;
+}

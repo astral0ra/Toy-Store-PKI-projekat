@@ -1,0 +1,152 @@
+<div class="page">
+    <div id="filter-container">
+        <div class="outer-filter-style">
+            <button class="toggle-button" (click)="showTypes = !showTypes">
+                <span class="filter-label">Tip</span>
+                <span [class.rotated]="showTypes"><mat-icon>keyboard_arrow_down</mat-icon></span>
+            </button>
+
+            @if (showTypes) {
+            <div class="chip-list">
+                <mat-chip-listbox [formControl]="typeControl" multiple>
+                    @for (type of types(); track type.typeId) {
+                    <mat-chip-option [value]="type">
+                        {{ type.name }}
+                    </mat-chip-option>
+                    }
+                </mat-chip-listbox>
+            </div>
+            }
+        </div>
+
+        <div id="gender-radio" class="outer-filter-style">
+            <button class="toggle-button" (click)="showGender = !showGender">
+                <span class="filter-label">Pol</span>
+                <span [class.rotated]="showTypes"><mat-icon>keyboard_arrow_down</mat-icon></span>
+            </button>
+
+            @if (showGender) {
+            <mat-radio-group [formControl]="genderControl" class="chip-list">
+                <mat-radio-button value="svi">Svi</mat-radio-button>
+                <mat-radio-button value="devojčica">Devojčica</mat-radio-button>
+                <mat-radio-button value="dečak">Dečak</mat-radio-button>
+            </mat-radio-group>
+            }
+
+        </div>
+
+        <div class="outer-filter-style">
+            <button class="toggle-button" (click)="showAgeGroups = !showAgeGroups">
+                <span class="filter-label">Uzarst</span>
+                <span [class.rotated]="showAgeGroups"><mat-icon>keyboard_arrow_down</mat-icon></span>
+            </button>
+
+            @if (showAgeGroups) {
+            <div class="chip-list">
+                <mat-chip-listbox [formControl]="ageGroupControl" multiple>
+                    <mat-chip-option value="0-2">0-2</mat-chip-option>
+                    <mat-chip-option value="3-5">3-5</mat-chip-option>
+                    <mat-chip-option value="6-9">6-9</mat-chip-option>
+                    <mat-chip-option value="10+">10+</mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            }
+        </div>
+
+        <div class="outer-filter-style">
+            <button class="toggle-button" (click)="showPriceRange = !showPriceRange">
+                <span class="filter-label">Cena</span>
+                <span [class.rotated]="showTypes"><mat-icon>keyboard_arrow_down</mat-icon></span>
+            </button>
+
+            @if (showPriceRange) {
+            <div class="price-filter chip-list">
+                <div id="min-price-filter"><span class="price-label">Min</span>
+                    <input type="number" class="price-input" step="100" [formControl]="minPriceControl"
+                        placeholder="npr. 1000">
+                </div>
+
+                <div id="max-price-filter"><span class="price-label">Max</span>
+                    <input type="number" class="price-input" step="100" [formControl]="maxPriceControl"
+                        placeholder="npr. 10000">
+                </div>
+            </div>
+            }
+
+        </div>
+
+        <button matButton="filled" (click)="resetFilters()">Resetuj</button>
+    </div>
+
+    <div id="item-container">
+        <div id="search-and-sort">
+            <div id="search-container">
+                <mat-form-field class="custom-rounded-styling">
+                    <mat-label>Pretraži</mat-label>
+                    <input matInput type="search" [formControl]="searchControl" placeholder="Type to search">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div id="sort-container">
+                <mat-form-field class="custom-rounded-styling">
+                    <mat-label>Sortiraj po</mat-label>
+                    <mat-select [formControl]="sortControl">
+                        <mat-option value="name">Naziv</mat-option>
+                        <mat-option value="price">Cena</mat-option>
+                        <mat-option value="type.name">Kategorija</mat-option>
+                        <mat-option value="ageGroup.name">Uzrast</mat-option>
+                        <mat-option value="targetGroup">Pol</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <button matButton="filled" (click)="toggleSortDirection()">
+                {{ sortDirectionControl.value === 'rast' ? 'Opad.' : 'Rast.'}}
+            </button>
+        </div>
+
+        <div id="item-result">
+            @for(toy of filteredToys(); track toy.toyId){
+            <mat-card class="item-toy-card custom-rounded-styling" [routerLink]="['/toy', toy.toyId]">
+                <mat-card-header>
+                    <mat-card-title>{{toy.name}}</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content class="card-body">
+                    <img [src]="toy.imageUrl" alt="{{toy.name}}">
+
+                    <mat-card-subtitle>
+                        <div class="description">
+                            <span class="description-text">{{toy.description}}</span>
+                        </div>
+                    </mat-card-subtitle>
+                    <div class="stars">
+                        @if (toy.avgRating > 0) {
+                            @for (star of getStars(toy.avgRating); track $index) {
+                                <mat-icon class="star-icon">{{ star }}</mat-icon>
+                            }
+                            <span class="rating-text">({{ toy.avgRating }})</span>
+                        } @else {
+                            <span class="no-reviews">Bez recenzija</span>
+                        }
+                    </div>
+                    <div class="age-group">
+                        <mat-icon class="age-icon">child_care</mat-icon>
+                        <span>{{ toy.ageGroup?.name || 'Svi uzrasti' }}</span>
+                    </div>
+
+                    <div class="price-container">
+                        <span class="price">{{toy.price}} RSD</span>
+
+                        <button matFab extended (click)="addToCart(toy); $event.stopPropagation()">
+                            <mat-icon>add_shopping_cart</mat-icon>
+                            <span>Kupi</span>
+                        </button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            }
+        </div>
+    </div>
+</div>

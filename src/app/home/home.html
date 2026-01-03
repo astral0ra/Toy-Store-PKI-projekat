@@ -1,0 +1,62 @@
+<div class="page">
+    <div id="welcome">
+        <div id="spacer"></div>
+        <div id="welcome-content">
+            <h1>Igračke po uzrastu!</h1>
+            <div id="age-buttons">
+                <img src="/age-icon1.svg" alt="0-2" (click)="filterByAge('0-2')" class="age-icon">
+                <img src="/age-icon2.svg" alt="3-5" (click)="filterByAge('3-5')" class="age-icon">
+                <img src="/age-icon3.svg" alt="6-9" (click)="filterByAge('6-9')" class="age-icon">
+                <img src="/age-icon4.svg" alt="10+" (click)="filterByAge('10+')" class="age-icon">
+                <img src="/age-icon5.svg" alt="all" (click)="filterByAge('')" class="age-icon">
+            </div>
+        </div>
+    </div>
+
+    <div id="showcase">
+        <div id="carousel-section">
+            <button class="round-icon-button" (click)="prevSlide()"><mat-icon>chevron_left</mat-icon></button>
+            <mat-card id="carousel">
+                <mat-card-title>Najbolje ocenjene igračke!</mat-card-title>
+
+                <mat-card-content>
+                    @if (loading()) {
+                        <div class="loading">Učitavanje...</div>
+                    } @else if (topToys().length === 0) {
+                        <div class="no-toys">Nema igračaka za prikaz</div>
+                    } @else {
+                        @for (toy of visibleToys; track toy.toyId) {
+                            <mat-card class="toy-card" [routerLink]="['/toy', toy.toyId]">
+                                <mat-card-header>
+                                    <mat-card-title>{{ toy.name }}</mat-card-title>
+                                </mat-card-header>
+
+                                <mat-card-content>
+                                    <img [src]="toy.imageUrl" [alt]="toy.name">
+                                    <div class="stars">
+                                        @if (toy.avgRating > 0) {
+                                            @for (star of getStars(toy.avgRating); track $index) {
+                                                <mat-icon class="star-icon">{{ star }}</mat-icon>
+                                            }
+                                            <span class="rating-text">({{ toy.avgRating }})</span>
+                                        } @else {
+                                            <span class="no-reviews">Bez recenzija</span>
+                                        }
+                                    </div>
+                                    <span class="price">{{ toy.price }} RSD</span>
+                                </mat-card-content>
+                            </mat-card>
+                        }
+                    }
+                </mat-card-content>
+
+            </mat-card>
+            <button class="round-icon-button" (click)="nextSlide()"><mat-icon>chevron_right</mat-icon></button>
+        </div>
+
+        <div id="shop-button">
+            <img src="" alt="">
+            <button matButton="filled" routerLink="/shop">Kupite sada!</button>
+        </div>
+    </div>
+</div>
