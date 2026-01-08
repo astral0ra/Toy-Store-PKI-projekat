@@ -11,7 +11,7 @@ import axios from 'axios';
 
 import { ToyModel } from '../models/toy.model';
 import { Review } from '../models/review.model';
-import { CartService } from '../cart/cart.service';
+import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { ReviewService } from '../services/review.service';
 

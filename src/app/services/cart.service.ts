@@ -1,32 +1,35 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { ToyModel } from '../models/toy.model';
 import { CartItem, Order, OrderItem } from '../models/order.model';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
+  // Local storage keys
   private readonly CART_KEY = 'cart-items';
   private readonly ORDERS_KEY = 'user-orders';
 
+  // cartItems() gives the current cart array
+  // orders() gives the current orders array
   private cartItems = signal<CartItem[]>([]);
   private orders = signal<Order[]>([]);
-
+  // Used to know which user is logged in (checkout and filtering orders)
   private authService = inject(AuthService);
 
-  // Computed values
+  // Automatically recalculates whenever cartItems change
   totalPrice = computed(() => {
     return this.cartItems().reduce((sum, item) => sum + (item.toy.price * item.quantity), 0);
   });
-
+  // Total item count
   itemCount = computed(() => {
     return this.cartItems().reduce((sum, item) => sum + item.quantity, 0);
   });
-
+  // When service is created (app start) restore stored data
   constructor() {
     this.loadCart();
     this.loadOrders();
   }
-
+  // Load cart from localStorage into cartItems signal
   private loadCart(): void {
     try {
       const saved = localStorage.getItem(this.CART_KEY);
@@ -37,11 +40,11 @@ export class CartService {
       console.error('Failed to load cart:', e);
     }
   }
-
+  // Save cartItems signal into localStorage
   private saveCart(): void {
     localStorage.setItem(this.CART_KEY, JSON.stringify(this.cartItems()));
   }
-
+  // Load orders from localStorage into orders signal
   private loadOrders(): void {
     try {
       const saved = localStorage.getItem(this.ORDERS_KEY);
@@ -58,10 +61,15 @@ export class CartService {
   }
 
   // Cart methods
+  // Add a toy to cart:
+  // if already exists, increase quantity
+  // else add new CartItem with quantity 1 and timestamp
+
   addItem(toy: ToyModel): void {
     const items = this.cartItems();
     const existingIndex = items.findIndex(item => item.toy.toyId === toy.toyId);
 
+    // Find existing toy by toyId
     if (existingIndex >= 0) {
       // Increase quantity if already in cart
       this.updateQuantity(existingIndex, items[existingIndex].quantity + 1);
@@ -72,20 +80,24 @@ export class CartService {
         quantity: 1,
         addedAt: new Date().toISOString()
       };
+      // Create a new array
       this.cartItems.update(items => [...items, newItem]);
+      // Save to local storage  
       this.saveCart();
     }
   }
-
+  //Read only access to current cart items
   getItems(): CartItem[] {
     return this.cartItems();
   }
-
+  //Remove item by array index
   removeItem(index: number): void {
     this.cartItems.update(items => items.filter((_, i) => i !== index));
     this.saveCart();
   }
 
+  // Update quantity by index
+  // If quantity < 1, item is removed
   updateQuantity(index: number, quantity: number): void {
     if (quantity < 1) {
       this.removeItem(index);
@@ -93,19 +105,19 @@ export class CartService {
     }
 
     this.cartItems.update(items => {
-      const updated = [...items];
-      updated[index] = { ...updated[index], quantity };
+      const updated = [...items]; // copy array
+      updated[index] = { ...updated[index], quantity }; //copy item and change the quantity
       return updated;
     });
     this.saveCart();
   }
-
+  // Clear entire cart
   clear(): void {
     this.cartItems.set([]);
     this.saveCart();
   }
 
-  // Checkout - creates an order
+  // Checkout - creates an order from current cart and clean cart
   checkout(): Order | null {
     const user = this.authService.currentUser();
     if (!user) return null;
@@ -113,6 +125,7 @@ export class CartService {
     const items = this.cartItems();
     if (items.length === 0) return null;
 
+    // Convert cartItem into orderItem
     const orderItems: OrderItem[] = items.map((item, index) => ({
       id: Date.now() + index,
       toy: item.toy,
@@ -121,6 +134,7 @@ export class CartService {
       orderedAt: new Date().toISOString()
     }));
 
+    // Create order object
     const order: Order = {
       id: Date.now(),
       items: orderItems,
@@ -128,7 +142,7 @@ export class CartService {
       createdAt: new Date().toISOString(),
       userEmail: user.email
     };
-
+    // Save newest order at the beginning
     this.orders.update(orders => [order, ...orders]);
     this.saveOrders();
 
@@ -139,16 +153,17 @@ export class CartService {
   }
 
   // Order methods
+  // Return onlz orders belonging to the currently logged in user
   getOrders(): Order[] {
     const user = this.authService.currentUser();
     if (!user) return [];
     return this.orders().filter(o => o.userEmail === user.email);
   }
-
+  // Get a single order by id (no user filter)
   getOrderById(orderId: number): Order | undefined {
     return this.orders().find(o => o.id === orderId);
   }
-
+  // Update status of one item inside one order
   updateItemStatus(orderId: number, itemId: number, status: 'rezervisano' | 'pristiglo' | 'otkazano'): void {
     this.orders.update(orders => {
       return orders.map(order => {
@@ -176,7 +191,8 @@ export class CartService {
   markAsArrived(orderId: number, itemId: number): void {
     this.updateItemStatus(orderId, itemId, 'pristiglo');
   }
-
+  // Delete one item from an order and recalculate totals
+  // If an order becomes empty, remove it entirely
   deleteItem(orderId: number, itemId: number): void {
     this.orders.update(orders => {
       return orders.map(order => {
@@ -194,6 +210,7 @@ export class CartService {
     this.saveOrders();
   }
 
+  // Used to restrict reviews to only delivered items
   // Check if user has received a specific toy (for review restriction)
   hasUserReceivedToy(toyId: number): boolean {
     const user = this.authService.currentUser();
@@ -210,7 +227,11 @@ export class CartService {
     return false;
   }
 
-  // Get order status for a specific toy (for review form messages)
+  // Returns the overall status for a toy for the logged-in user:
+  // - pristiglo wins immediately
+  // - otherwise rezervisano if at least one reserved
+  // - otherwise otkazano if at least one cancelled
+  // - otherwise not-ordered
   getToyOrderStatus(toyId: number): 'not-ordered' | 'rezervisano' | 'pristiglo' | 'otkazano' {
     const user = this.authService.currentUser();
     if (!user) return 'not-ordered';

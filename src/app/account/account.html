@@ -2,12 +2,17 @@
   <div class="auth-card">
     <h1>Moj nalog</h1>
 
+<!-- Reactive form binding:
+         [formGroup]="form" connects this form to Account.form
+         (ngSubmit)="save()" runs save() when user clicks submit -->
     <form [formGroup]="form" (ngSubmit)="save()" class="auth-form">
 
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Ime</mat-label>
           <input matInput formControlName="name" />
+
+ <!-- Show error only if touched and invalid -->
           @if (f.name.touched && f.name.invalid) {<mat-error>Obavezno polje!</mat-error>}
         </mat-form-field>
 

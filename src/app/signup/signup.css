@@ -46,14 +46,12 @@ mat-form-field { width: 100%; }
   .row { grid-template-columns: 1fr 1fr; gap: 10px; }
 }
 
-/* compact button */
 .auth-form button[mat-raised-button] {
   border-radius: 26px;
   font-weight: 600;
   padding: 10px 16px;
 }
 
-/* tiny hint only while focused */
 .pw-hint,
 .auth-form .mat-mdc-form-field-hint {
   font-size: 11px;
@@ -66,13 +64,11 @@ mat-form-field:not(:focus-within) .pw-hint,
   display: none;
 }
 
-/* trim subscript wrapper height */
 .auth-form .mat-mdc-form-field-subscript-wrapper {
   padding: 0 8px;
   min-height: 0;
 }
 
-/* extra squeeze on short laptop screens */
 @media (max-height: 750px) {
   .auth-form { gap: 8px; padding: 16px 18px; }
   .auth-form h1 { font-size: 1.5rem; }

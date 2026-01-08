@@ -10,9 +10,12 @@ import { AuthService } from '../services/auth.service';
 import { TypeModel } from '../models/type.model';
 import axios from 'axios';
 
+// Custom validator: checks if password and confirmPassword are the same
 function passwordsMatch(group: AbstractControl): ValidationErrors | null {
   const pw = group.get('password')?.value || '';
   const cpw = group.get('confirmPassword')?.value || '';
+
+  // If they match, validation passes (null). If not, returns an error object.
   return pw === cpw ? null : { passwordMismatch: true };
 }
 
@@ -28,9 +31,11 @@ export class Signup implements OnInit {
   private auth = inject(AuthService);
   private router = inject(Router);
 
-  submitting = signal(false);
-  loadingTypes = signal(true);
-  types = signal<TypeModel[]>([]);
+// UI state signals
+  submitting = signal(false);     // true while form is being submitted
+  loadingTypes = signal(true);    // true while loading types from API
+  types = signal<TypeModel[]>([]); // list of types from API (for dropdown)
+
 
   countries = [
     { code: 'BG', name: 'Beograd' },
@@ -38,7 +43,9 @@ export class Signup implements OnInit {
     { code: 'NI', name: 'Niš' },
     { code: 'SU', name: 'Subotica' },
     { code: 'KG', name: 'Kragujevac' },
-    { code: 'VA', name: 'Valjevo' }
+    { code: 'VA', name: 'Valjevo' },
+    { code: 'SD', name: 'Smederevo' }
+
   ];
 
   form: FormGroup = this.fb.group({
@@ -55,6 +62,8 @@ export class Signup implements OnInit {
       street: ['', Validators.required],
       number: ['', [Validators.required, Validators.pattern(/^\d+[A-Za-z]?$/)]]
     }),
+    
+    // Multi-select list of favorite type IDs
     favouriteTypes: [[] as number[]]
   });
 
@@ -65,18 +74,24 @@ export class Signup implements OnInit {
   async ngOnInit() {
     try {
       const res = await axios.get('https://toy.pequla.com/api/type');
+      // Save API data into signal   
       this.types.set(res.data);
     } catch (err) {
       console.error('Failed to load types:', err);
     } finally {
+      // stop even if API fails
       this.loadingTypes.set(false);
     }
   }
 
+  // called on submit
   async submit() {
+  // block if invalid and force validation messages to appear
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    this.submitting.set(true);
+  // disable button / show loading state  
+  this.submitting.set(true);
     try {
+ // getRawValue reads values from the full form, including nested groups
       const v = this.form.getRawValue();
       this.auth.signup({
         name: v.name!,
@@ -87,10 +102,15 @@ export class Signup implements OnInit {
         address: `${v.address.street} ${v.address.number}, ${v.address.city}`,
         favouriteTypes: v.favouriteTypes || []
       });
+    // After signup, user is logged in, redirect to shop
       this.router.navigate(['/shop']);
     } catch (err) {
+
+      // signup() throws if email already exists
       console.error(err);
     } finally {
+
+      // Re-enable the submit button
       this.submitting.set(false);
     }
   }

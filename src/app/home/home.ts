@@ -7,6 +7,7 @@ import axios from "axios";
 import { ToyModel } from '../models/toy.model';
 import { ReviewService } from '../services/review.service';
 
+// Local interface, extends ToyModel and adds rating info we need only on the home page
 interface TopToy extends ToyModel {
   avgRating: number;
   reviewCount: number;
@@ -19,13 +20,21 @@ interface TopToy extends ToyModel {
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
+// Inject services we need:
+// ReviewService for top rated IDs, Router to navigate to other pages
   private reviewService = inject(ReviewService);
   private router = inject(Router);
 
+  // List of top toys (with rating data) used by carousel
   topToys = signal<TopToy[]>([]);
+
+  // List of top toys (with rating data) used by carousel
   currentIndex = signal(0);
+
+  // Loading flag to display loading UI while we fetch data
   loading = signal(true);
 
+  // Navigates to /shop with query param age=... so shop page can filter
   filterByAge(ageGroup: string) {
     if (ageGroup) {
       this.router.navigate(['/shop'], { queryParams: { age: ageGroup } });
@@ -34,6 +43,7 @@ export class Home implements OnInit {
     }
   }
 
+ // Runs once when the component loads
   async ngOnInit() {
     try {
       // Load all toys from API
@@ -47,10 +57,12 @@ export class Home implements OnInit {
       const topToysWithRating: TopToy[] = [];
 
       for (const rated of topRated) {
+      //find toy object by id
         const toy = allToys.find(t => t.toyId === rated.toyId);
         if (toy) {
           topToysWithRating.push({
             ...toy,
+            //force consistemt image URL based on toyID
             imageUrl: `https://toy.pequla.com/img/${toy.toyId}.png`,
             avgRating: rated.avgRating,
             reviewCount: rated.reviewCount
@@ -72,38 +84,45 @@ export class Home implements OnInit {
           }
         }
       }
-
+      // Store final list in signal
       this.topToys.set(topToysWithRating);
     } catch (error) {
+      // if API fails, log error
       console.error('Error fetching data:', error);
     } finally {
+      //loading stops regardless of success or failure
       this.loading.set(false);
     }
   }
-
+  // Move carousel one step backward (wrap around using modulo)
   prevSlide() {
     const toys = this.topToys();
     if (toys.length === 0) return;
     this.currentIndex.set((this.currentIndex() - 1 + toys.length) % toys.length);
   }
 
+  // Move carousel one step forward (wrap around using modulo)
   nextSlide() {
     const toys = this.topToys();
     if (toys.length === 0) return;
     this.currentIndex.set((this.currentIndex() + 1) % toys.length);
   }
 
-  getStars(rating: number): string[] {
-    const stars: string[] = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating - fullStars >= 0.5;
+  // Converts number (of the rating) into 5 Angular material stars
+  getStars(rating: number): string[] { // function that accepts a number rating and returns an array of strings (icon names)
+    const stars: string[] = []; // empty array that will hold icon names / ex. final value: 'star', 'star', 'star_half', 'star_border', 'star_border'
+    const fullStars = Math.floor(rating); // only takes the whole number = how many full stars
+    const hasHalfStar = rating - fullStars >= 0.5; // checks if the decimal part is at least 0.5
 
+  // Adds one start string per full start
     for (let i = 0; i < fullStars; i++) {
       stars.push('star');
     }
+  //Adds one half star only if needed + maximum 1 half star allowed
     if (hasHalfStar) {
       stars.push('star_half');
     }
+  // Fills the remaining slots with empty stars
     while (stars.length < 5) {
       stars.push('star_border');
     }

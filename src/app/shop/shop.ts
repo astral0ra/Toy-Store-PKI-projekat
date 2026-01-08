@@ -14,7 +14,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router'
 
 import { ToyModel } from '../models/toy.model'
 import { TypeModel } from '../models/type.model'
-import { CartService } from '../cart/cart.service'
+import { CartService } from '../services/cart.service'
 import { ReviewService } from '../services/review.service'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 
@@ -42,18 +42,26 @@ interface ToyWithRating extends ToyModel {
   ],
   templateUrl: './shop.html',
   styleUrl: './shop.css',
+
+  // Disables style scoping, so CSS can affect nested Material elements
   encapsulation: ViewEncapsulation.None
 })
 export class Shop implements OnInit {
+  // Signals store state in a reactive way
+  // types = all type options for filtering
   types = signal<TypeModel[]>([])
+  // full list loaded from API
   toys = signal<ToyWithRating[]>([])
+  //list after filters/sorts applied
   filteredToys = signal<ToyWithRating[]>([])
-
+  
+  // Flags to show/hide filter section in UI
   showTypes = false
   showAgeGroups = false
   showPriceRange = false
   showGender = false
 
+  // Form controls for filters/sorting
   typeControl = new FormControl<TypeModel[]>([])
   genderControl = new FormControl<string>('svi')
   ageGroupControl = new FormControl<string[]>([])
@@ -63,6 +71,7 @@ export class Shop implements OnInit {
   sortControl = new FormControl<string>('name')
   sortDirectionControl = new FormControl<'rast' | 'opad'>('rast')
 
+  //Services injected via constructor
   constructor(
     private cartService: CartService,
     private snackBar: MatSnackBar,
@@ -70,6 +79,7 @@ export class Shop implements OnInit {
     private reviewService: ReviewService
   ) { }
 
+  //load filter options and toy list from API
   ngOnInit() {
     this.loadTypes()
     this.loadToys()
@@ -82,7 +92,7 @@ export class Shop implements OnInit {
         this.showAgeGroups = true
       }
     })
-
+    // Re-apply filters whenever any filter/sort input changes
     this.typeControl.valueChanges.subscribe(() => this.applyFilters())
     this.genderControl.valueChanges.subscribe(() => this.applyFilters())
     this.ageGroupControl.valueChanges.subscribe(() => this.applyFilters())
@@ -91,14 +101,14 @@ export class Shop implements OnInit {
     this.searchControl.valueChanges.subscribe(() => this.applyFilters())
     this.sortControl.valueChanges.subscribe(() => this.applyFilters())
   }
-
+    // Re-apply filters whenever any filter/sort input changes
   private loadTypes() {
     axios.get('https://toy.pequla.com/api/type')
       .then(res => {
         this.types.set(res.data)
       })
   }
-
+  // Loads toys, adds image URL, then calculates rating for each toy
   private async loadToys() {
     try {
       const res = await axios.get('https://toy.pequla.com/api/toy')
@@ -109,7 +119,7 @@ export class Shop implements OnInit {
         reviewCount: 0
       }))
 
-      // Load ratings for all toys
+      // Load ratings for all toys and compute avg rating
       const toysWithRatings: ToyWithRating[] = await Promise.all(
         toysWithImages.map(async (toy: ToyWithRating) => {
           const reviews = await this.reviewService.getReviewsForToy(toy.toyId)
@@ -120,6 +130,7 @@ export class Shop implements OnInit {
         })
       )
 
+    // Save full list and initial filtered list
       this.toys.set(toysWithRatings)
       this.filteredToys.set(toysWithRatings)
       // Apply filters after toys are loaded (for URL params)
@@ -128,7 +139,7 @@ export class Shop implements OnInit {
       console.error('Error loading toys:', error)
     }
   }
-
+  // Applies all filters and sorting to the full toy list, updates filteredToys
   applyFilters() {
     const selectedTypes = this.typeControl.value || []
     const selectedTypeIds = selectedTypes.map(t => t.typeId)
@@ -141,6 +152,7 @@ export class Shop implements OnInit {
 
     const searchTerm = (this.searchControl.value || '').toLowerCase()
 
+    // Filter: only keep toys matching every active filter
     let result = this.toys().filter(toy => {
       const matchesType = selectedTypeIds.length === 0 || (toy.type && selectedTypeIds.includes(toy.type.typeId))
       const matchesGender = selectedGender === 'svi' || toy.targetGroup === selectedGender
@@ -152,6 +164,7 @@ export class Shop implements OnInit {
       return matchesType && matchesGender && matchesAge && matchesMinPrice && matchesMaxPrice && matchesSearch
     })
 
+    // Sorting
     const sortItem = this.sortControl.value
     const sortDir = this.sortDirectionControl.value
 
@@ -170,16 +183,18 @@ export class Shop implements OnInit {
     this.filteredToys.set(result)
   }
 
+  // Allows sorting by nested fields like "type.name" by following the path
   private getNestedValue(obj: any, path: string): any {
     return path.split('.').reduce((current, key) => current?.[key], obj)
   }
 
+  // Toggles between ascending (rast) and descending (opad)
   toggleSortDirection() {
     const current = this.sortDirectionControl.value
     this.sortDirectionControl.setValue(current === 'rast' ? 'opad' : 'rast')
     this.applyFilters()
   }
-
+  // Resets filters back to defaults
   resetFilters() {
     this.typeControl.setValue([])
     this.genderControl.setValue('svi')
@@ -189,7 +204,7 @@ export class Shop implements OnInit {
 
     this.filteredToys.set(this.toys())
   }
-
+  // Adds a toy to cart and shows a Snackbar confirmation
   addToCart(toy: ToyModel) {
     this.cartService.addItem(toy)
     this.snackBar.open(`${toy.name} added to cart!`, 'Close', {
@@ -198,7 +213,8 @@ export class Shop implements OnInit {
       verticalPosition: 'bottom'
     })
   }
-
+  
+  // Converts numeric rating into a list of icon names for star display
   getStars(rating: number): string[] {
     const stars: string[] = []
     const fullStars = Math.floor(rating)
