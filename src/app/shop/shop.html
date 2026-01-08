@@ -1,5 +1,6 @@
 <div class="page">
     <div id="filter-container">
+        <span id="filter-title">Filter</span>
         <div class="outer-filter-style">
             <button class="toggle-button" (click)="showTypes = !showTypes">
                 <span class="filter-label">Tip</span>
@@ -75,7 +76,7 @@
 
         </div>
 
-        <button matButton="filled" (click)="resetFilters()">Resetuj</button>
+        <button matButton="filled" (click)="resetFilters()" id="reset-btn">Resetuj</button>
     </div>
 
     <div id="item-container">
@@ -110,34 +111,38 @@
             @for(toy of filteredToys(); track toy.toyId){
             <mat-card class="item-toy-card custom-rounded-styling" [routerLink]="['/toy', toy.toyId]">
                 <mat-card-header>
-                    <mat-card-title>{{toy.name}}</mat-card-title>
+                    <mat-card-title class="toy-name">{{toy.name}}</mat-card-title>
                 </mat-card-header>
 
                 <mat-card-content class="card-body">
-                    <img [src]="toy.imageUrl" alt="{{toy.name}}">
+                    <img [src]="toy.imageUrl" alt="{{toy.name}}" class="toy-image">
 
                     <mat-card-subtitle>
                         <div class="description">
                             <span class="description-text">{{toy.description}}</span>
                         </div>
                     </mat-card-subtitle>
-                    <div class="stars">
+                    <div id="toy-ratings">
+                        <div class="age-group">
+                        <img [src]="'/age-icon' + toy.ageGroup.ageGroupId + '.svg'" [alt]="toy.ageGroup.name">
+                        </div>
                         @if (toy.avgRating > 0) {
-                            @for (star of getStars(toy.avgRating); track $index) {
-                                <mat-icon class="star-icon">{{ star }}</mat-icon>
+                            <div class="stars">
+                                @for (star of getStars(toy.avgRating); track $index){
+                                    <mat-icon class="star-icon">{{ star }}</mat-icon>
+                                }
+                                <span class="rating-text">({{ toy.avgRating }})</span>
+                            </div>
+                            } @else {
+                                <span class="no-reviews">Bez recenzija</span>
                             }
-                            <span class="rating-text">({{ toy.avgRating }})</span>
-                        } @else {
-                            <span class="no-reviews">Bez recenzija</span>
-                        }
                     </div>
-                    <div class="age-group">
-                        <mat-icon class="age-icon">child_care</mat-icon>
-                        <span>{{ toy.ageGroup?.name || 'Svi uzrasti' }}</span>
-                    </div>
+                    
 
                     <div class="price-container">
-                        <span class="price">{{toy.price}} RSD</span>
+                        <div class="price-wrapper">
+                            <span class="price">{{toy.price}} RSD</span>
+                        </div>
 
                         <button matFab extended (click)="addToCart(toy); $event.stopPropagation()">
                             <mat-icon>add_shopping_cart</mat-icon>

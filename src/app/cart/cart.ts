@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ɵEmptyOutletComponent } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,7 +19,7 @@ import { AuthService } from '../services/auth.service';
     MatIconModule,
     MatDividerModule,
     MatSnackBarModule
-  ],
+],
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })

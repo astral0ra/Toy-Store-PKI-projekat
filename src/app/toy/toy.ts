@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, computed, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, ɵEmptyOutletComponent } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,8 +25,9 @@ import { ReviewService } from '../services/review.service';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     FormsModule,
-    RouterLink
-  ],
+    RouterLink,
+    ɵEmptyOutletComponent
+],
   templateUrl: './toy.html',
   styleUrl: './toy.css'
 })

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     overflow: auto;
+    min-width: 687px;
 }
 
 ::-webkit-scrollbar {
@@ -20,15 +21,28 @@
     background-color: #ADAAC6;
 }
 
+#filter-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    padding: 1rem;
+    color:#6b7ba0;
+}
+
 #filter-container {
     position: sticky;
-    gap: 1.5rem;
-    margin: 2rem 2rem 2rem 2.7rem;
+    top: 2rem;
+    gap: 1.7rem;
+    margin: 2rem 2rem 22rem 2rem;
     display: flex;
     flex-direction: column;
     border-radius: 2rem;
     max-width: 230px;
     flex-grow: 1;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    background-color: rgba(162, 167, 190, 0.301);
+    overflow: scroll;
 }
 
 #price-container {
@@ -42,7 +56,7 @@
     flex-direction: row;
     justify-content:flex-start;
     gap: 1.5rem;
-    padding-bottom: 2rem;
+    padding-bottom: 2.5rem; /* merged with second file */
     flex-wrap: wrap;
     align-items: center;
 }
@@ -58,14 +72,25 @@
     justify-content: flex-start;
     gap: 1.2rem;
     flex-shrink: 1;
+    align-items: flex-start; /* from second file */
+    padding-bottom: 2.5rem;  /* from second file */
 }
 
 .item-toy-card {
     height: 400px;
-    flex: 0 1 280px;
+    flex: 0 0 280px; /* from second file */
+    max-width: 280px; /* from second file */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer; /* from first file */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, filter 0.3s ease-in-out; /* from first file */
+}
+
+.item-toy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5.5px 7px rgba(10, 18, 31, 0.123);
+    filter: brightness(1.01);
 }
 
 .item-toy-card img {
@@ -73,6 +98,14 @@
     height: 160px;
     object-fit: cover;
     border-radius: 0.5rem;
+}
+
+.toy-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 1rem;
+    display: block;
 }
 
 .toggle-button {
@@ -137,14 +170,12 @@
     flex-direction: column;
 }
 
-.item-toy-card {
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.item-toy-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+#toy-ratings {
+    display:flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    padding-bottom: 4px;
 }
 
 .stars-preview {
@@ -161,10 +192,10 @@
 }
 
 .star-icon {
-    font-size: 16px;
+    font-size: 17px;
     width: 16px;
     height: 16px;
-    color: #FFB800;
+    color: #f3c95f;
 }
 
 .rating-text {
@@ -192,4 +223,35 @@
     font-size: 18px;
     width: 18px;
     height: 18px;
+}
+
+.age-group img {
+    width: 40px;
+    height: 40px;
+}
+
+.description-text {
+    color: #617592;
+    padding-top: 0.2rem;
+}
+
+.toy-name {
+    color: #597194;
+    letter-spacing: 0.25px !important; 
+}
+
+.price {
+    font-weight: 500;
+    font-size: 14px;
+    color: #56708f;
+}
+
+.price-wrapper {
+    background-color: rgba(218, 219, 231, 0.842);
+    border-radius: 50px;
+    padding: 0.7rem;
+}
+
+#reset-btn {
+    min-height: 2.5rem;
 }

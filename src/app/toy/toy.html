@@ -42,11 +42,11 @@
           <div class="toy-meta">
             <div class="meta-item">
               <mat-icon>category</mat-icon>
-              <span>{{ toy()!.type?.name || 'Nepoznato' }}</span>
+              <span>{{ toy()!.type.name || 'Nepoznato' }}</span>
             </div>
             <div class="meta-item">
               <mat-icon>child_care</mat-icon>
-              <span>Uzrast: {{ toy()!.ageGroup?.name || 'Svi uzrasti' }}</span>
+              <span>Uzrast: {{ toy()!.ageGroup.name || 'Svi uzrasti' }}</span>
             </div>
             <div class="meta-item">
               <mat-icon>person</mat-icon>
@@ -139,8 +139,10 @@
               @if (submittingReview()) {
                 <mat-spinner diameter="20"></mat-spinner>
               } @else {
-                <mat-icon>send</mat-icon>
-                Pošalji recenziju
+                <ng-component>
+                  <mat-icon>send</mat-icon>
+                  Pošalji recenziju
+                </ng-component>
               }
             </button>
           }
