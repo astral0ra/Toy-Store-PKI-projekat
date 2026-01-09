@@ -32,6 +32,7 @@ import { ReviewService } from '../services/review.service';
   styleUrl: './toy.css'
 })
 export class Toy implements OnInit {
+  // The loaded toy object from API (or null if not loaded)
   toy = signal<ToyModel | null>(null);
   loading = signal(true);
   error = signal<string | null>(null);
@@ -43,36 +44,43 @@ export class Toy implements OnInit {
   userComment = signal('');
   submittingReview = signal(false);
   loadingReviews = signal(true);
-  hasUserReviewed = signal(false);
+  hasUserReviewed = signal(false); // Prevetnts duplicate reviews
+  // Order status used to restrict reviews (must be 'pristiglo' to review)
   toyOrderStatus = signal<'not-ordered' | 'rezervisano' | 'pristiglo' | 'otkazano'>('not-ordered');
 
+  // List used to render 5 star buttons in template
   stars = [1, 2, 3, 4, 5];
 
-  // Can review if: logged in, has 'pristiglo' status, hasn't reviewed yet
+  // Can review if: logged in, has 'pristiglo' status, hasn't been reviewed yet
   canReview = computed(() => {
     return this.toyOrderStatus() === 'pristiglo' && !this.hasUserReviewed();
   });
-
+  //Calculates avg rating from all reviews
   averageRating = computed(() => {
     const r = this.reviews();
     if (r.length === 0) return 0;
-    const sum = r.reduce((acc, review) => acc + review.rating, 0);
+    const sum = r.reduce((acc, review) => acc + review.rating, 0); // Iteration over all reviews and adds together their rating values tto calculate the total sum of ratings
+  // Rounded to 1 decimal
     return Math.round((sum / r.length) * 10) / 10;
   });
 
+  // Computed number of reviews
   reviewCount = computed(() => this.reviews().length);
 
   private reviewService = inject(ReviewService);
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private cartService: CartService,
-    private snackBar: MatSnackBar,
-    public authService: AuthService
+private route: ActivatedRoute, // gets /toy/:id param
+    private router: Router,        // navigation (go back)
+    private cartService: CartService, // add to cart + get order status
+    private snackBar: MatSnackBar, // toast messages
+    public authService: AuthService // public so template can read login status
+  
   ) {}
 
+  // Runs when components loads
   ngOnInit() {
+  // Read the ID route parametar from URL
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.loadToy(parseInt(id));
@@ -83,9 +91,11 @@ export class Toy implements OnInit {
     }
   }
 
+  // Loads toy data from API
   private loadToy(id: number) {
     axios.get(`https://toy.pequla.com/api/toy/${id}`)
       .then(res => {
+  // Add image URL based on toyId (API returns toy fields but not full image url)
         const toyData = {
           ...res.data,
           imageUrl: `https://toy.pequla.com/img/${res.data.toyId}.png`
@@ -94,14 +104,16 @@ export class Toy implements OnInit {
         this.loading.set(false);
       })
       .catch(err => {
+  // If API fails, show error message
         this.error.set('Greška pri učitavanju igračke');
         this.loading.set(false);
       });
   }
-
+  // Loads reviews and also checks if the current user can review
   private async loadReviews(toyId: number) {
     this.loadingReviews.set(true);
     try {
+  // Fetch reviews from ReviewService (local storage / local data)
       const reviews = await this.reviewService.getReviewsForToy(toyId);
       this.reviews.set(reviews);
 
@@ -109,7 +121,8 @@ export class Toy implements OnInit {
       const user = this.authService.currentUser();
       if (user) {
         const userName = `${user.name} ${user.surname?.charAt(0)}.`;
-        const hasReviewed = await this.reviewService.hasUserReviewed(toyId, userName);
+      // Check if they already review this toy  
+      const hasReviewed = await this.reviewService.hasUserReviewed(toyId, userName);
         this.hasUserReviewed.set(hasReviewed);
 
         // Check order status for this toy
@@ -122,7 +135,7 @@ export class Toy implements OnInit {
       this.loadingReviews.set(false);
     }
   }
-
+// UI helpers for star rating interactions
   setRating(rating: number) {
     this.userRating.set(rating);
   }
@@ -134,19 +147,19 @@ export class Toy implements OnInit {
   clearHoverRating() {
     this.hoverRating.set(0);
   }
-
+  // Returns a CSS class name for star display (filled vs empty)
   getStarClass(star: number): string {
     const displayRating = this.hoverRating() || this.userRating();
     return star <= displayRating ? 'filled' : 'empty';
   }
-
+  // For displaying stars inside an existing review
   getReviewStarClass(star: number, rating: number): string {
     return star <= rating ? 'filled' : 'empty';
   }
-
+  //Submits a new review
   submitReview() {
     const user = this.authService.currentUser();
-
+  // Must be logged in  
     if (!user) {
       this.snackBar.open('Morate biti prijavljeni da biste ostavili recenziju', 'OK', {
         duration: 3000
@@ -180,26 +193,31 @@ export class Toy implements OnInit {
     if (!toy) return;
 
     this.submittingReview.set(true);
-
+  // Create the userName key again
     const userName = `${user.name} ${user.surname?.charAt(0)}.`;
+
+  // Add review to ReviewService storage
     const newReview = this.reviewService.addReview({
       toyId: toy.toyId,
       userName,
       rating: this.userRating(),
       comment: this.userComment()
     });
-
+    // Update local UI list immediately
     this.reviews.update(reviews => [newReview, ...reviews]);
+
+    //Reset UI inputs
     this.userRating.set(0);
     this.userComment.set('');
     this.submittingReview.set(false);
     this.hasUserReviewed.set(true);
 
+    //Success
     this.snackBar.open('Hvala na recenziji!', 'OK', {
       duration: 3000
     });
   }
-
+  //Add the toy to cart using CartService
   addToCart() {
     const t = this.toy();
     if (t) {
