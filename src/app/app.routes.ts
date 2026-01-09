@@ -9,18 +9,13 @@ import { Signup } from './signup/signup';
 import { Orders } from './orders/orders';
 import { authGuard } from './guard/auth.guard';
 import { ChangePassword } from './account/change-password';
-import { Component } from '@angular/core';
-
-const Placeholder = Component({
-  standalone: true,
-  template: '<div class="auth-wrap"><div class="auth-card"><h1>Uskoro</h1></div></div>'
-})(class {});
+import { FavoriteToys } from './favorite-toys/favorite-toys';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'shop', pathMatch: 'full' },
   { path: 'account', component: Account, canActivate: [authGuard] },
   { path: 'change-password', component: ChangePassword, canActivate: [authGuard] },
-  { path: 'favorites', component: Placeholder, canActivate: [authGuard] },
+  { path: 'favorites', component: FavoriteToys, canActivate: [authGuard] },
   { path: 'orders', component: Orders, canActivate: [authGuard] },
   { path: 'home', component: Home },
   { path: 'shop', component: Shop },

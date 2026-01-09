@@ -17,6 +17,7 @@ import { TypeModel } from '../models/type.model'
 import { CartService } from '../services/cart.service'
 import { ReviewService } from '../services/review.service'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
+import { FavoriteToysService } from '../services/favorite-toys.service'
 
 interface ToyWithRating extends ToyModel {
   avgRating: number
@@ -76,7 +77,8 @@ export class Shop implements OnInit {
     private cartService: CartService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private favoriteService: FavoriteToysService
   ) { }
 
   //load filter options and toy list from API
@@ -230,5 +232,13 @@ export class Shop implements OnInit {
       stars.push('star_border')
     }
     return stars
+  }
+
+  toggleFavorites(toy: ToyModel): void {
+    this.favoriteService.toggleFavorite(toy)
+  }
+
+  isFavorite(toy: ToyModel): boolean {
+    return this.favoriteService.isFavorite(toy.toyId)
   }
 }

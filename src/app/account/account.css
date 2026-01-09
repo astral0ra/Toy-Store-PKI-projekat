@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom right, #f7f3f7 0%, #e6e8f0 45%, #dee3f2 100%);
   padding: 20px;
 }
 

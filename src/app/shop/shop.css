@@ -34,7 +34,7 @@
     position: sticky;
     top: 2rem;
     gap: 1.7rem;
-    margin: 2rem 2rem 22rem 2rem;
+    margin: 2rem 2rem 21.5rem 2rem;
     display: flex;
     flex-direction: column;
     border-radius: 2rem;
@@ -56,7 +56,7 @@
     flex-direction: row;
     justify-content:flex-start;
     gap: 1.5rem;
-    padding-bottom: 2.5rem; /* merged with second file */
+    padding-bottom: 2.5rem;
     flex-wrap: wrap;
     align-items: center;
 }
@@ -72,18 +72,18 @@
     justify-content: flex-start;
     gap: 1.2rem;
     flex-shrink: 1;
-    align-items: flex-start; /* from second file */
-    padding-bottom: 2.5rem;  /* from second file */
+    align-items: flex-start;
+    padding-bottom: 2.5rem;
 }
 
 .item-toy-card {
     height: 400px;
-    flex: 0 0 280px; /* from second file */
-    max-width: 280px; /* from second file */
+    flex: 0 0 280px;
+    max-width: 280px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    cursor: pointer; /* from first file */
+    cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, filter 0.3s ease-in-out; /* from first file */
 }
 
@@ -159,9 +159,8 @@
     padding: 1.1rem 1.4rem 1.2rem 1rem;
     display: flex;
     flex-direction: column;
-    background-color: #01236323;
+    background-color: #03266818;
     border-radius: 1.5rem;
-    box-shadow: #0013411e 0px 4px 6px;
 }
 
 .chip-list {
@@ -172,8 +171,7 @@
 
 #toy-ratings {
     display:flex;
-    justify-content: center;
-    gap: 1rem;
+    justify-content: space-evenly;
     align-items: center;
     padding-bottom: 4px;
 }
@@ -250,8 +248,27 @@
     background-color: rgba(218, 219, 231, 0.842);
     border-radius: 50px;
     padding: 0.7rem;
+    align-items: center;
 }
 
 #reset-btn {
     min-height: 2.5rem;
+}
+
+#buy-btn {
+    transition: background-color 0.25s ease-in-out;
+    background-color: #f3d47f !important;
+}
+
+#buy-btn:hover {
+    background-color: rgb(248, 207, 131) !important;
+}
+
+#fav-toy {
+    color: #ec679ec4;
+    transition: transform 0.1s ease-in-out;
+}
+
+#fav-toy:hover{
+    transform: scale(1.15);
 }

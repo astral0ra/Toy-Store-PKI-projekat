@@ -1,0 +1,43 @@
+<div class="favorites-page">
+  <h1>Moje omiljene igračke</h1>
+
+  @if (favoriteToys().length === 0) {
+    <div class="empty-favorites">
+      <mat-icon>favorite_border</mat-icon>
+      <p>Nemate omiljene igračke</p>
+      <button mat-raised-button color="primary" [routerLink]="['/shop']">
+        <mat-icon>store</mat-icon>
+        Pregledaj igračke
+      </button>
+    </div>
+  } @else {
+    <mat-card class="favorite-card">
+        
+                <mat-card-content class="favorite-items">
+                    @for (toy of favoriteToys(); track toy.toyId) {
+                    <div class="favorite-item">
+                        <img [src]="toy.imageUrl" [alt]="toy.name" class="item-image">
+
+         <div class="item-details">
+                    <h4>{{ toy.name }}</h4>
+                    <div class="item-meta">
+                        <p class="description-text">{{ toy.description }}</p>
+                        <p class="price">{{ toy.price }} RSD</p>
+                    </div>
+                  </div>
+
+          <div class="item-actions">
+            <button mat-stroked-button color="primary" (click)="addToCart(toy)">
+              <mat-icon>add_shopping_cart</mat-icon>
+              Dodaj u korpu
+            </button>
+            <button mat-icon-button color="warn" (click)="toggleFavorites(toy)">
+              <mat-icon>{{ isFavorite(toy) ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
+          </div>
+        </div>
+        }
+        </mat-card-content>
+    </mat-card>
+  }
+</div>

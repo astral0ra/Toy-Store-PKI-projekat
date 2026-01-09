@@ -55,8 +55,7 @@ input.mat-mdc-input-element {
 .item-toy-card.custom-rounded-styling .price-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  justify-content: space-between;
 }
 
 .item-toy-card.custom-rounded-styling .mat-mdc-card-title {

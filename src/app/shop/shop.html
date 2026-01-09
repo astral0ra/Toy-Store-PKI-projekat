@@ -144,10 +144,14 @@
                             <span class="price">{{toy.price}} RSD</span>
                         </div>
 
-                        <button matFab extended (click)="addToCart(toy); $event.stopPropagation()">
+                        <button matFab extended (click)="addToCart(toy); $event.stopPropagation()" id="buy-btn">
                             <mat-icon>add_shopping_cart</mat-icon>
                             <span>Kupi</span>
                         </button>
+
+                        <mat-icon id="fav-toy" (click)="toggleFavorites(toy); $event.stopPropagation()">
+                            {{ isFavorite(toy) ? 'favorite' : 'favorite_border' }}
+                        </mat-icon>
                     </div>
                 </mat-card-content>
             </mat-card>
