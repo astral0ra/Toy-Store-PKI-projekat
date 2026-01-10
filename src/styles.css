@@ -86,6 +86,12 @@ input.mat-mdc-input-element {
   display: block;
 }
 
+.toy-card .mat-mdc-card-header .mat-mdc-card-header-text {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
 .button {
     background-color: #F45296;
     color: #FFEFC0;

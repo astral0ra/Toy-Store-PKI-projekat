@@ -15,9 +15,9 @@
 
     <div id="showcase">
         <div id="carousel-section">
-            <button class="round-icon-button" (click)="prevSlide()"><mat-icon>chevron_left</mat-icon></button>
+            <button matFab class="round-icon-button" (click)="prevSlide()"><mat-icon>chevron_left</mat-icon></button>
             <mat-card id="carousel">
-                <mat-card-title>Najbolje ocenjene igračke!</mat-card-title>
+                <mat-card-title id="best-toys-title">Najbolje ocenjene igračke!</mat-card-title>
 
                 <mat-card-content>
                     @if (loading()) {
@@ -27,35 +27,38 @@
                     } @else {
                         @for (toy of visibleToys; track toy.toyId) {
                             <mat-card class="toy-card" [routerLink]="['/toy', toy.toyId]">
-                                <mat-card-header>
-                                    <mat-card-title>{{ toy.name }}</mat-card-title>
-                                </mat-card-header>
 
-                                <mat-card-content>
-                                    <img [src]="toy.imageUrl" [alt]="toy.name">
+                                <span class="toy-title">{{ toy.name }}</span>
+
+                                <div id="toy-card-content">
+                                  <img [src]="toy.imageUrl" [alt]="toy.name">
+                                </div>
+
+                                <div class="toy-details">
                                     <div class="stars">
                                         @if (toy.avgRating > 0) {
-                                            @for (star of getStars(toy.avgRating); track $index) {
-                                                <mat-icon class="star-icon">{{ star }}</mat-icon>
-                                            }
-                                            <span class="rating-text">({{ toy.avgRating }})</span>
-                                        } @else {
-                                            <span class="no-reviews">Bez recenzija</span>
+                                        @for (star of getStars(toy.avgRating); track $index) {
+                                        <mat-icon class="star-icon">{{ star }}</mat-icon>
                                         }
+                                      <span class="rating-text">({{ toy.avgRating }})</span>
+                                      } @else {
+                                      <span class="no-reviews">Bez recenzija</span>
+                                      }
                                     </div>
                                     <span class="price">{{ toy.price }} RSD</span>
-                                </mat-card-content>
+                                </div>
                             </mat-card>
                         }
                     }
                 </mat-card-content>
 
             </mat-card>
-            <button class="round-icon-button" (click)="nextSlide()"><mat-icon>chevron_right</mat-icon></button>
+            <button matFab class="round-icon-button" (click)="nextSlide()"><mat-icon>chevron_right</mat-icon></button>
         </div>
 
-        <div id="shop-button">
-            <img src="" alt="">
+        <div id="shop-btn">
+            <img src="squiggle.svg" id="squiggle">
+            <img src="squiggle-yellow.svg" id="squiggle-yellow">
             <button matButton="filled" routerLink="/shop">Kupite sada!</button>
         </div>
     </div>

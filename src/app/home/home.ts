@@ -135,7 +135,7 @@ export class Home implements OnInit {
     if (toys.length === 0) return [];
 
     const result: TopToy[] = [];
-    const count = Math.min(3, toys.length);
+    const count = Math.min(4, toys.length);
 
     for (let i = 0; i < count; i++) {
       const index = (this.currentIndex() + i) % toys.length;
