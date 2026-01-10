@@ -8,6 +8,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import axios from 'axios';
+import { LoginWarningDialog } from '../login-warning-dialog/login-warning-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ToyModel } from '../models/toy.model';
 import { Review } from '../models/review.model';
@@ -26,7 +29,8 @@ import { ReviewService } from '../services/review.service';
     MatProgressSpinnerModule,
     FormsModule,
     RouterLink,
-    ɵEmptyOutletComponent
+    ɵEmptyOutletComponent,
+    MatDialogModule
 ],
   templateUrl: './toy.html',
   styleUrl: './toy.css'
@@ -74,8 +78,8 @@ private route: ActivatedRoute, // gets /toy/:id param
     private router: Router,        // navigation (go back)
     private cartService: CartService, // add to cart + get order status
     private snackBar: MatSnackBar, // toast messages
-    public authService: AuthService // public so template can read login status
-  
+    public authService: AuthService, // public so template can read login status
+    private dialog: MatDialog
   ) {}
 
   // Runs when components loads
@@ -121,7 +125,7 @@ private route: ActivatedRoute, // gets /toy/:id param
       const user = this.authService.currentUser();
       if (user) {
         const userName = `${user.name} ${user.surname?.charAt(0)}.`;
-      // Check if they already review this toy  
+      // Check if they already review this toy
       const hasReviewed = await this.reviewService.hasUserReviewed(toyId, userName);
         this.hasUserReviewed.set(hasReviewed);
 
@@ -159,7 +163,7 @@ private route: ActivatedRoute, // gets /toy/:id param
   //Submits a new review
   submitReview() {
     const user = this.authService.currentUser();
-  // Must be logged in  
+  // Must be logged in
     if (!user) {
       this.snackBar.open('Morate biti prijavljeni da biste ostavili recenziju', 'OK', {
         duration: 3000
@@ -217,16 +221,23 @@ private route: ActivatedRoute, // gets /toy/:id param
       duration: 3000
     });
   }
+
   //Add the toy to cart using CartService
   addToCart() {
     const t = this.toy();
-    if (t) {
-      this.cartService.addItem(t);
-      this.snackBar.open(`${t.name} dodato u korpu!`, 'OK', {
-        duration: 2500,
-        horizontalPosition: 'left',
-        verticalPosition: 'bottom'
+    if(!this.authService.isLoggedIn()){
+      this.dialog.open(LoginWarningDialog, {
+        data: { action: 'dodali u korpu' }
       });
+    } else {
+      if (t) {
+        this.cartService.addItem(t);
+        this.snackBar.open(`${t.name} dodato u korpu!`, 'OK', {
+          duration: 2500,
+          horizontalPosition: 'left',
+          verticalPosition: 'bottom'
+        });
+      }
     }
   }
 

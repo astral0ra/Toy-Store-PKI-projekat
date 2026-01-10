@@ -7,17 +7,21 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatSliderModule } from '@angular/material/slider'
 import { MatSelectModule } from '@angular/material/select'
 import { MatInputModule } from '@angular/material/input'
-import { MatRadioButton, MatRadioGroup } from '@angular/material/radio'
+import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { ActivatedRoute, RouterLink } from '@angular/router'
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
+import { LoginWarningDialog } from '../login-warning-dialog/login-warning-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ToyModel } from '../models/toy.model'
 import { TypeModel } from '../models/type.model'
 import { CartService } from '../services/cart.service'
 import { ReviewService } from '../services/review.service'
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 import { FavoriteToysService } from '../services/favorite-toys.service'
+import {AuthService} from '../services/auth.service'
 
 interface ToyWithRating extends ToyModel {
   avgRating: number
@@ -34,12 +38,12 @@ interface ToyWithRating extends ToyModel {
     MatSliderModule,
     MatSelectModule,
     MatInputModule,
-    MatRadioGroup,
-    MatRadioButton,
+    MatRadioModule,
     MatChipsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    RouterLink
+    RouterLink,
+    MatDialogModule
   ],
   templateUrl: './shop.html',
   styleUrl: './shop.css',
@@ -55,7 +59,7 @@ export class Shop implements OnInit {
   toys = signal<ToyWithRating[]>([])
   //list after filters/sorts applied
   filteredToys = signal<ToyWithRating[]>([])
-  
+
   // Flags to show/hide filter section in UI
   showTypes = false
   showAgeGroups = false
@@ -78,7 +82,9 @@ export class Shop implements OnInit {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private reviewService: ReviewService,
-    private favoriteService: FavoriteToysService
+    private favoriteService: FavoriteToysService,
+    public auth: AuthService,
+    private dialog: MatDialog
   ) { }
 
   //load filter options and toy list from API
@@ -208,14 +214,20 @@ export class Shop implements OnInit {
   }
   // Adds a toy to cart and shows a Snackbar confirmation
   addToCart(toy: ToyModel) {
-    this.cartService.addItem(toy)
-    this.snackBar.open(`${toy.name} added to cart!`, 'Close', {
-      duration: 2500,
-      horizontalPosition: 'left',
-      verticalPosition: 'bottom'
-    })
+    if(!this.auth.isLoggedIn()){
+      this.dialog.open(LoginWarningDialog, {
+        data: { action: 'dodali u korpu' }
+      });
+    } else {
+      this.cartService.addItem(toy)
+      this.snackBar.open(`${toy.name} dodato u korpu!`, 'Close', {
+        duration: 2500,
+        horizontalPosition: 'left',
+        verticalPosition: 'bottom'
+      })
+    }
   }
-  
+
   // Converts numeric rating into a list of icon names for star display
   getStars(rating: number): string[] {
     const stars: string[] = []
@@ -235,7 +247,13 @@ export class Shop implements OnInit {
   }
 
   toggleFavorites(toy: ToyModel): void {
-    this.favoriteService.toggleFavorite(toy)
+    if(!this.auth.isLoggedIn()){
+      this.dialog.open(LoginWarningDialog, {
+        data: { action: 'dodali u omiljene' }
+      });
+    } else {
+      this.favoriteService.toggleFavorite(toy)
+    }
   }
 
   isFavorite(toy: ToyModel): boolean {

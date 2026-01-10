@@ -55,7 +55,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1.8rem; 
+    margin-top: 1.8rem;
 }
 
 #carousel {
@@ -89,7 +89,7 @@ h1 {
 #carousel mat-card-content {
     display: flex;
     gap: 1.3rem;
-    padding: 0.3rem 2.6rem 2.5rem 2.6rem;
+    padding: 0.3rem 2.6rem 2.4rem 2.6rem;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -257,7 +257,7 @@ h1 {
 }
 
 .toy-title {
-    font-size: 1.22rem;
+    font-size: 1.2rem;
     padding: 0.5rem;
     max-width: 100%;
     text-overflow: ellipsis;

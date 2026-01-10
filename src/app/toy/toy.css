@@ -1,7 +1,6 @@
 .toy-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 10.8rem 2rem 10.8rem;
+  background: #ecebf5;
 }
 
 .loading-container,
@@ -53,7 +52,7 @@
   font-size: 2rem;
   font-weight: 600;
   margin: 0;
-  color: #333;
+  color: #597194;
 }
 
 .toy-rating {
@@ -83,7 +82,7 @@
 .toy-description {
   font-size: 1rem;
   line-height: 1.6;
-  color: #555;
+  color: #617592;
 }
 
 .toy-meta {
@@ -116,7 +115,7 @@
 .price-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #2e7d32;
+  color: #617592;
 }
 
 .add-to-cart-btn {
