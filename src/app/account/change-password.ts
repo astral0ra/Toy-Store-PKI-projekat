@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 // Validator to compare new passwords: compares "newPassword" and "confirmPassword" inside a FormGroup
-// If they match, return null (valid). If not, return an error object { mismatch: true } 
+// If they match, return null (valid). If not, return an error object { mismatch: true }
 function passwordsMatch(group: AbstractControl): ValidationErrors | null {
   const newPw = group.get('newPassword')?.value || '';
   const repeat = group.get('confirmPassword')?.value || '';
@@ -35,7 +35,7 @@ export class ChangePassword {
     oldPassword: ['', Validators.required],
     passwordGroup: this.fb.group({
   // at least one letter and one number
-      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d).+$/)]], 
+      newPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d).+$/)]],
       confirmPassword: ['', Validators.required]
     }, { validators: passwordsMatch })
   });
@@ -74,7 +74,7 @@ export class ChangePassword {
     this.saving.set(true);
     try {
       this.auth.updateProfile({ password: v.passwordGroup.newPassword });
-      this.message.set('✅ Lozinka uspešno promenjena.');
+      this.message.set('Lozinka uspešno promenjena.');
       this.form.reset();
     } catch (e: any) {
       this.errorMsg.set(e?.message || 'Greška pri čuvanju.');

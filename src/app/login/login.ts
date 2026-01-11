@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,8 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCheckboxModule, MatIconModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class Login {
   // Inject FormBuilder to create a reactive form
@@ -43,8 +44,8 @@ export class Login {
   //Called when user submits the login form
   async submit() {
   // If form is invalid, show validation errors and stop
-    if (this.form.invalid) { 
-    this.form.markAllAsTouched(); 
+    if (this.form.invalid) {
+    this.form.markAllAsTouched();
     return; }
   // Set loading state
     this.submitting.set(true);
@@ -53,7 +54,7 @@ export class Login {
       const { email, password } = this.form.getRawValue();
   //Attempt login via AuthService
       const ok = this.auth.login(email!, password!);
-  //On success, redirect to shop page    
+  //On success, redirect to shop page
       if (ok) {
         this.router.navigate(['/shop']);
       } else {

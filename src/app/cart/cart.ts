@@ -4,6 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterLink } from '@angular/router';
+
 // MatSnackBar is the little popup notification at the bottom
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from '../services/cart.service';
@@ -18,7 +20,8 @@ import { AuthService } from '../services/auth.service';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterLink
 ],
   templateUrl: './cart.html',
   styleUrl: './cart.css'

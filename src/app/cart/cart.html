@@ -17,10 +17,12 @@
           <div class="cart-item">
             <img [src]="item.toy.imageUrl" [alt]="item.toy.name" class="item-image">
 
-            <div class="item-details">
+            <div class="item-details" [routerLink]="['/toy', item.toy.toyId]">
               <h3>{{ item.toy.name }}</h3>
               <p class="item-description">{{ item.toy.description }}</p>
-              <p class="item-price">{{ item.toy.price }} RSD</p>
+              <div class="price-wrapper">
+                <p class="item-price">{{ item.toy.price }} RSD</p>
+              </div>
             </div>
 
             <div class="item-quantity">
@@ -37,9 +39,9 @@
               <span>{{ item.toy.price * item.quantity }} RSD</span>
             </div>
 
-            <button mat-icon-button color="warn" (click)="removeItem(i)" class="remove-btn">
-              <mat-icon>delete</mat-icon>
-            </button>
+            <mat-icon (click)="removeItem(i); $event.stopPropagation()" class="remove-btn">
+              delete
+            </mat-icon>
           </div>
         }
       </div>
@@ -65,7 +67,7 @@
             @if (checkingOut()) {
               Naručivanje...
             } @else {
-              <span><mat-icon>shopping_bag</mat-icon>Naruči</span>
+              <span id="buy-btn"><mat-icon>shopping_bag</mat-icon>Naruči</span>
             }
           </button>
         </div>

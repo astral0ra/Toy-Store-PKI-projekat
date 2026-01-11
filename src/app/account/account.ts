@@ -51,7 +51,7 @@ export class Account implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     city: ['', [Validators.required, Validators.maxLength(60)]],
     address: ['', [Validators.required, Validators.maxLength(120)]],
-    phone: ['', [Validators.required, Validators.maxLength(11)]],
+    phone: [''],
     favouriteTypes: [[] as number[]] //stores selected type IDs from the multiselect AS NUMBER
   });
 
@@ -106,7 +106,7 @@ export class Account implements OnInit {
       //  Get values from the form (includes disabled controls if any)
       const v = this.form.getRawValue();
 
-      // Build an update object    
+      // Build an update object
       const patch: Partial<User> = {
         name: v.name!,
         surname: v.surname!,

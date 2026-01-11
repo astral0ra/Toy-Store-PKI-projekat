@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-favorite-toys',
@@ -40,7 +40,8 @@ export class FavoriteToys implements OnInit {
 
   constructor(
     private favoriteService: FavoriteToysService,
-    private cartService: CartService
+    private cartService: CartService,
+    private snackBar: MatSnackBar   // ✅ inject service, not module
   ) {}
 
   ngOnInit(): void {
@@ -90,11 +91,21 @@ export class FavoriteToys implements OnInit {
 
   addToCart(toy: ToyModel): void {
     this.cartService.addItem(toy);
+    this.snackBar.open(`${toy.name} dodato u korpu!`, 'Close', {
+      duration: 2500,
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom'
+    });
   }
 
   toggleFavorites(toy: ToyModel): void {
     this.favoriteService.toggleFavorite(toy);
     this.favorites = this.favoriteService.getFavorites(); // refresh
+    this.snackBar.open(`${toy.name} uklonjeno iz omiljenih igračaka!`, 'Close', {
+      duration: 2500,
+      horizontalPosition: 'left',
+      verticalPosition: 'bottom'
+    });
   }
 
   isFavorite(toy: ToyModel): boolean {

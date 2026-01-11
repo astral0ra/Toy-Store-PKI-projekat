@@ -12,28 +12,30 @@
     </div>
   } @else {
     <mat-card class="favorite-card">
-        
+
                 <mat-card-content class="favorite-items">
                     @for (toy of favoriteToys(); track toy.toyId) {
-                    <div class="favorite-item">
+                    <div class="favorite-item" [routerLink]="['/toy', toy.toyId]">
                         <img [src]="toy.imageUrl" [alt]="toy.name" class="item-image">
 
          <div class="item-details">
-                    <h4>{{ toy.name }}</h4>
+                    <h4 class="toy-name">{{ toy.name }}</h4>
                     <div class="item-meta">
                         <p class="description-text">{{ toy.description }}</p>
-                        <p class="price">{{ toy.price }} RSD</p>
+                        <div class="price-wrapper">
+                          <p class="price">{{ toy.price }} RSD</p>
+                        </div>
                     </div>
                   </div>
 
           <div class="item-actions">
-            <button mat-stroked-button color="primary" (click)="addToCart(toy)">
+            <button mat-stroked-button color="primary" (click)="addToCart(toy); $event.stopPropagation()">
               <mat-icon>add_shopping_cart</mat-icon>
               Dodaj u korpu
             </button>
-            <button mat-icon-button color="warn" (click)="toggleFavorites(toy)">
-              <mat-icon>{{ isFavorite(toy) ? 'favorite' : 'favorite_border' }}</mat-icon>
-            </button>
+            <mat-icon (click)="toggleFavorites(toy); $event.stopPropagation()" id="fav-toy">
+              favorite
+            </mat-icon>
           </div>
         </div>
         }

@@ -9,17 +9,17 @@
 .auth-card {
   width: 520px;
   background: #faf7fb;
-  padding: 40px 32px;
+  padding: 20px 32px;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(64, 72, 112, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .auth-card h1 {
   text-align: center;
-  color: #404870;
+  color: #566280;
   font-weight: 700;
   font-size: 1.8rem;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .auth-form {
@@ -47,7 +47,7 @@ mat-form-field {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 20px;
+  margin-bottom: 1rem;
 }
 
 button[mat-raised-button] {

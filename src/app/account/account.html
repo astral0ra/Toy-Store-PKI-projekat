@@ -2,64 +2,60 @@
   <div class="auth-card">
     <h1>Moj nalog</h1>
 
-<!-- Reactive form binding:
-         [formGroup]="form" connects this form to Account.form
-         (ngSubmit)="save()" runs save() when user clicks submit -->
+    <!-- Reactive form binding -->
     <form [formGroup]="form" (ngSubmit)="save()" class="auth-form">
 
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Ime</mat-label>
-          <input matInput formControlName="name" />
-
- <!-- Show error only if touched and invalid -->
+          <input matInput formControlName="name" name="given-name" autocomplete="given-name" />
           @if (f.name.touched && f.name.invalid) {<mat-error>Obavezno polje!</mat-error>}
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Prezime</mat-label>
-          <input matInput formControlName="surname" />
+          <input matInput formControlName="surname" name="family-name" autocomplete="family-name" />
           @if (f.surname.touched && f.surname.invalid) {<mat-error>Obavezno polje!</mat-error>}
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" />
-        @if (f.email.touched && f.email.invalid) {<mat-error >Neispravan email!</mat-error>}
+        <input matInput type="email" formControlName="email" name="email" autocomplete="email" />
+        @if (f.email.touched && f.email.invalid) {<mat-error>Neispravan email!</mat-error>}
       </mat-form-field>
 
       <div class="row">
         <mat-form-field appearance="outline">
           <mat-label>Grad</mat-label>
-          <input matInput formControlName="city" />
+          <input matInput formControlName="city" name="city" autocomplete="address-level2" />
           @if (f.city.touched && f.city.invalid) {<mat-error>Obavezno polje!</mat-error>}
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Adresa</mat-label>
-          <input matInput formControlName="address" />
+          <input matInput formControlName="address" name="address" autocomplete="street-address" />
           @if (f.address.touched && f.address.invalid) {<mat-error>Obavezno polje!</mat-error>}
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline">
         <mat-label>Telefon</mat-label>
-        <input matInput formControlName="phone" />
+        <input matInput formControlName="phone" name="tel" autocomplete="tel" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Omiljene vrste igračaka</mat-label>
         @if (loadingTypes()) {
-          <mat-select disabled>
-            <mat-option>Učitavanje...</mat-option>
-          </mat-select>
+        <mat-select disabled>
+          <mat-option>Učitavanje...</mat-option>
+        </mat-select>
         } @else {
-          <mat-select formControlName="favouriteTypes" multiple>
-            @for (type of types(); track type.typeId) {
-              <mat-option [value]="type.typeId">{{ type.name }}</mat-option>
-            }
-          </mat-select>
+        <mat-select formControlName="favouriteTypes" multiple>
+          @for (type of types(); track type.typeId) {
+          <mat-option [value]="type.typeId">{{ type.name }}</mat-option>
+          }
+        </mat-select>
         }
       </mat-form-field>
 
@@ -76,11 +72,11 @@
         <button mat-stroked-button color="warn" type="button" (click)="logout()">
           Odjava
         </button>
+
         <div class="password-section">
           <button mat-stroked-button color="primary" (click)="goToChangePassword()">
             Promeni lozinku
           </button>
-
         </div>
       </div>
     </form>

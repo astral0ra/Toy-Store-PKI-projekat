@@ -7,7 +7,7 @@
 .orders-page h1 {
   font-size: 1.75rem;
   margin-bottom: 1.5rem;
-  color: #6b7ba0;
+  color: #566280;
   text-align: center;
 }
 
@@ -85,13 +85,13 @@
   margin: 0 0 0.25rem 0;
   font-size: 1rem;
   font-weight: 600;
-  color: #333;
+  color: #597194;
 }
 
 .item-meta {
   margin: 0;
   font-size: 0.85rem;
-  color: #666;
+  color: #56708f;
 }
 
 .item-status {
@@ -134,7 +134,7 @@
 }
 
 .total-price {
-  color: #2e7d32;
+  color: #ec679f;
   font-size: 1.25rem;
 }
 
